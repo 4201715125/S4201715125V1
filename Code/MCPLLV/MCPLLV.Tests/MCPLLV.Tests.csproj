@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A008D828-8E1D-48D7-98A2-B23C09B53596}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{BE0B359B-4E62-40A5-92E6-854E6EA92C70}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MCPLLV.Data</RootNamespace>
-    <AssemblyName>MCPLLV.Data</AssemblyName>
+    <RootNamespace>MCPLLV.Tests</RootNamespace>
+    <AssemblyName>MCPLLV.Tests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -47,26 +49,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Mappings\ProjectMap.cs" />
-    <Compile Include="Mappings\UserGroupMap.cs" />
-    <Compile Include="Mappings\UserMap.cs" />
-    <Compile Include="Models\Project.cs" />
-    <Compile Include="Models\User.cs" />
-    <Compile Include="Models\UserGroup.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RawData.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MCPLLV.Business\MCPLLV.Business.csproj">
+      <Project>{f5970a62-acdf-439e-9cf1-b3135d6d4b03}</Project>
+      <Name>MCPLLV.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MCPLLV.Data\MCPLLV.Data.csproj">
+      <Project>{a008d828-8e1d-48d7-98a2-b23c09b53596}</Project>
+      <Name>MCPLLV.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MCPLLV.Utils\MCPLLV.Utils.csproj">
       <Project>{3467d951-04d1-4bce-98fd-b2a7ff678f48}</Project>
       <Name>MCPLLV.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Data.cd" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

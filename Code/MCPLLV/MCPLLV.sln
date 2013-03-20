@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCPLLV.Business", "MCPLLV.B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCPLLV.Utils", "MCPLLV.Utils\MCPLLV.Utils.csproj", "{3467D951-04D1-4BCE-98FD-B2A7FF678F48}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCPLLV.Tests", "MCPLLV.Tests\MCPLLV.Tests.csproj", "{BE0B359B-4E62-40A5-92E6-854E6EA92C70}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{3467D951-04D1-4BCE-98FD-B2A7FF678F48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3467D951-04D1-4BCE-98FD-B2A7FF678F48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3467D951-04D1-4BCE-98FD-B2A7FF678F48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE0B359B-4E62-40A5-92E6-854E6EA92C70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE0B359B-4E62-40A5-92E6-854E6EA92C70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE0B359B-4E62-40A5-92E6-854E6EA92C70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE0B359B-4E62-40A5-92E6-854E6EA92C70}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
