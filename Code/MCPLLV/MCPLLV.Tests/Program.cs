@@ -13,7 +13,7 @@ namespace MCPLLV.Tests
 {
     class Program
     {
-        private static string connectionString = @"Data Source=.\SQLEXPRESS;AttachDbFilename=E:\Projects\anodisys.mdf;Integrated Security=True;User Instance=True";
+        private static string connectionString = @"Data Source=localhost;Initial Catalog=Anodisys;Integrated Security=True;Pooling=False";
         static void Main(string[] args)
         {
             var sessionFactory = CreateSessionFactory();
@@ -30,7 +30,9 @@ namespace MCPLLV.Tests
                     userGroup.Users = new List<User> { 
                         new User{
                             UserName = "user1",
-                            Password = "123456"
+                            Password = "123456",
+                            CreatedDate = DateTime.Now,
+                            UpdatedDate = DateTime.Now
                         }
                     };
 
@@ -45,7 +47,10 @@ namespace MCPLLV.Tests
         {
             return Fluently.Configure()
                 .Database(MsSqlConfiguration
-                    .MsSql2008.ConnectionString(connectionString)
+                    .MsSql2008.ConnectionString(
+                    connectionString
+                    )
+                    .ShowSql()
                 )
                 .Mappings(m => m.FluentMappings
                     .AddFromAssemblyOf<UserMap>()
