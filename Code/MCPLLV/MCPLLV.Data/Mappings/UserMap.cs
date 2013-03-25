@@ -12,8 +12,8 @@ namespace MCPLLV.Data.Mappings
         public UserMap()
         {
             Id(x => x.Id);
-            Map(x => x.UserName);
-            Map(x => x.Password);
+            Map(x => x.UserName).Not.Nullable();
+            Map(x => x.Password).Not.Nullable();
 
             Map(x => x.FirstName);
             Map(x => x.LastName);
@@ -24,10 +24,11 @@ namespace MCPLLV.Data.Mappings
             Map(x => x.CreatedDate);
             Map(x => x.UpdatedDate);
 
-            References(x => x.UserGroup);
-            HasManyToMany(x => x.Projects)
-                .Cascade.All()
-                .Table("UserProject");
+            References<UserGroup>(x => x.UserGroup, "UserGroupId");
+            HasMany<UserProject>(x => x.UserProjects)
+                .KeyColumn("UserId")
+                .Inverse()
+                .Cascade.All();
         }
     }
 }

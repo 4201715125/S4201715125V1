@@ -19,13 +19,15 @@ namespace MCPLLV.Data.Models
 
         public virtual DateTime CreatedDate { get; set; }
         public virtual DateTime UpdatedDate { get; set; }
-
-        public virtual IList<Project> Projects { get; set; }
+        
+        public virtual int UserGroupId { get; set; }
         public virtual UserGroup UserGroup { get; set; }
+
+        public virtual IList<UserProject> UserProjects { get; set; }
 
         public User()
         {
-            Projects = new List<Project>();
+            UserProjects = new List<UserProject>();
         }
     }
 }

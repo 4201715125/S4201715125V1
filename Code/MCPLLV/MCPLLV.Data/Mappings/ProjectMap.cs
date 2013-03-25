@@ -12,14 +12,15 @@ namespace MCPLLV.Data.Mappings
         public ProjectMap()
         {
             Id(x => x.Id);
-            Map(x => x.ProjectName);
+            Map(x => x.ProjectName).Not.Nullable();
             Map(x => x.Description);        
             Map(x => x.CreatedDate);
             Map(x => x.UpdatedDate);
 
-            HasManyToMany(x => x.Users)
-                .Cascade.All()
-                .Table("UserProject");
+            HasMany<UserProject>(x => x.UserProjects)
+                .KeyColumn("ProjectId")
+                .Inverse()
+                .Cascade.All();
         }
     }
 }

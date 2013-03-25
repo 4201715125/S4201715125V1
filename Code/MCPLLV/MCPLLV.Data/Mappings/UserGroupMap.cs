@@ -12,11 +12,12 @@ namespace MCPLLV.Data.Mappings
         public UserGroupMap()
         {
             Id(x => x.Id);
-            Map(x => x.Name);
+            Map(x => x.Name).Not.Nullable();
             Map(x => x.Description);
-            Map(x => x.Priority);
+            Map(x => x.Priority).Not.Nullable();
 
-            HasMany(x => x.Users)
+            HasMany<User>(x => x.Users)
+                .KeyColumn("UserGroupId")
                 .Inverse()
                 .Cascade.All();
         }

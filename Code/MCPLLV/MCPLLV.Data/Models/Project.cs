@@ -12,12 +12,12 @@ namespace MCPLLV.Data.Models
         public virtual string Description { get; set; }        
         public virtual DateTime CreatedDate { get; set; }
         public virtual DateTime UpdatedDate { get; set; }
-        
-        public virtual IList<User> Users { get; set; }        
+                
+        public virtual IList<UserProject> UserProjects { get; set; }
 
         public Project()
-        {
-            Users = new List<User>();
+        {            
+            UserProjects = new List<UserProject>();
         }
     }
 }
