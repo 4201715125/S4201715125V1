@@ -14,7 +14,7 @@ namespace MCPLLV.Data.Mappings
             Id(x => x.Id);
             Map(x => x.RawName).Not.Nullable();
             Map(x => x.MapName).Not.Nullable();
-            Map(x => x.ColumnTypeId).Not.Nullable(); // condition, decision, identifier?
+            Map(x => x.ColumnTypeId).Not.Nullable(); // condition, decision, identifier
             Map(x => x.IsNormalized).Default("0").Not.Nullable();
 
             References<DataFile>(x => x.DataFile, "DataFileId");            
