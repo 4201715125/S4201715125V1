@@ -4,11 +4,11 @@
 	<PropertyGroup>
 		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
 		<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-		<ProjectGuid>1259ddb4-5261-434e-828a-95a299eb27e5</ProjectGuid>
+		<ProjectGuid>c1495c65-32ee-49c8-89b3-a34833eaf1b0</ProjectGuid>
 		<OutputType>Library</OutputType>
 		<AppDesignerFolder>Properties</AppDesignerFolder>
-		<RootNamespace>MUIT2013.DataMining.Reducts</RootNamespace>
-		<AssemblyName>MUIT2013.DataMining.Reducts</AssemblyName>
+		<RootNamespace>MUIT2013.DataMining.Models</RootNamespace>
+		<AssemblyName>MUIT2013.DataMining.Models</AssemblyName>
 		<TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
 		<FileAlignment>512</FileAlignment>
 	</PropertyGroup>

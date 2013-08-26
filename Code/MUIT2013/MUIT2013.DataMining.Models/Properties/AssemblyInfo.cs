@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MUIT2013.DataMining.Reducts")]
+[assembly: AssemblyTitle("MUIT2013.DataMining.Models")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("MUIT2013.DataMining.Reducts")]
+[assembly: AssemblyProduct("MUIT2013.DataMining.Models")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("1259ddb4-5261-434e-828a-95a299eb27e5")]
+[assembly: Guid("c1495c65-32ee-49c8-89b3-a34833eaf1b0")]
 
 // Version information for an assembly consists of the following four values:
 //
