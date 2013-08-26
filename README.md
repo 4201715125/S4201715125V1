@@ -2,7 +2,7 @@ UIT-MCPLLV
 =========
 
 # Cài đặt
-Vào Vs 2012 -> Tools -> Library Package Manager -> Manage Nuget Packages for Solution. Và cài đặt các thư viện sau:
+Vào Vs 2012 -> Tools -> Library Package Manager -> Manage Nuget Packages for Solution. Và cài đặt các thư viện sau vào tất cả các Project:
 * CsvHelper 2.2.2
 * Dapper 1.12.1
 * DapperExtensions 1.4.1
