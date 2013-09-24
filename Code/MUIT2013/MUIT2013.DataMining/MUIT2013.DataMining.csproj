@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApproximationSpace.cs" />
     <Compile Include="AttributeRule\AddNumericRule.cs" />
     <Compile Include="AttributeRule\IGeneralRule.cs" />
     <Compile Include="AttributeRule\IRuleFactory.cs" />
@@ -55,7 +56,12 @@
     <Compile Include="AttributeRule\RangeNumericRule.cs" />
     <Compile Include="AttributeRule\IStringRule.cs" />
     <Compile Include="AttributeRule\StringRuleFactory.cs" />
+    <Compile Include="DecisionSystem.cs" />
+    <Compile Include="IndiscernibilityRelation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RoughInclusion.cs" />
+    <Compile Include="SetUtils.cs" />
+    <Compile Include="StandardApproximationSpace.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Algorithm\" />
