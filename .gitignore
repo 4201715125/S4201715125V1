@@ -12,6 +12,13 @@ TestResults
 *.suo
 *.user
 *.sln.docstates
+*.csproj
+Code/MUIT2013/MUIT2013.Business/x86/
+Code/MUIT2013/MUIT2013.DataMining/x86/
+Code/MUIT2013/MUIT2013.Presentation/packages.config
+Code/MUIT2013/MUIT2013.Presentation/x86/
+Code/MUIT2013/MUIT2013.Tests/x86/
+Code/MUIT2013/MUIT2013.Utils/x86/
 
 # Build results
 [Dd]ebug/
