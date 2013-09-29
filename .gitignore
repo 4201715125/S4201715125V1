@@ -12,7 +12,6 @@ TestResults
 *.suo
 *.user
 *.sln.docstates
-*.csproj
 Code/MUIT2013/MUIT2013.Business/x86/
 Code/MUIT2013/MUIT2013.DataMining/x86/
 Code/MUIT2013/MUIT2013.Presentation/packages.config
