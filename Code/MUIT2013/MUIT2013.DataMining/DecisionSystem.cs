@@ -14,5 +14,9 @@ namespace MUIT2013.DataMining
         public double[][] AttributesDomain { get; set; }
 
         public double?[][] Universe { get; set; }
+
+        public int ObjectCount {
+            get { return this.Universe.Count(); }
+        }
     }
 }
