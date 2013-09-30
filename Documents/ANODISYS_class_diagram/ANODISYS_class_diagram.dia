@@ -1,0 +1,45 @@
+@startuml
+
+class DecisionTable {
+  int[] ConditionAttrs
+  int[] DecisionAttrs
+  double[][] AttrValueSpace
+  set<double[]> ObjectSet
+}
+
+class ApproximationSpace {
+  void Contructor(DecisionTable tb, IndisRelation r, InclFunction incl)
+  set<double[]>[] GetObjectClasses()
+  set<double[]> GetLowerApproximation(set<doulbe[]> X)
+  set<double[]> GetUpperApproximation(set<doulbe[]> X)
+  set<double[]> GetPositiveRegion(set<doulbe[]> X)
+  set<double[]> GetNegativeRegion(set<doulbe[]> X)
+  set<double[]> GetBoundaryRegion(set<doulbe[]> X)
+}
+
+class ReductProcessor {
+  void Contructor(ApproximationSpace as)
+  int[][] GetReductSet()
+}
+
+class IndRelation {
+  void Contructor(function CompareFunction(double[] obj1, double[] obj2))
+  bool HaveRelation(double[] obj1, double[] obj2)
+}
+
+note "This class for indiscernability relations" as N1
+note as N2
+  <b>GetReductSet()</b> function return array of attribute reducts.
+  Each reduct is a array of integer.
+  Another Reduct processor will be dirived from this class, 
+    such as: ACOReductProcessor, EntropyReductProcessor, ...
+end note
+
+IndRelation .. N1
+N2 .. ReductProcessor
+QuickReductProcessor --|> ReductProcessor
+ApproximationSpace --o DecisionTable
+QuickReductProcessor --o ApproximationSpace
+
+
+@enduml

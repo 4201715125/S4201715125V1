@@ -5,16 +5,14 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MUIT2013.DataMining.AttributeRule;
 
 namespace MUIT2013.Tests
 {
-    class Program
+    public static class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-           
-            
+            ASTest.TestAprroximationSpace();
         }
     }
 }
