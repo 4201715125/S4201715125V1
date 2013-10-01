@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace MUIT2013.DataMining
 {
-    class QuickReductProcessor : ReductProcessor
+    public class QuickReductProcessor : ReductProcessor
     {
-        public QuickReductProcessor(ApproximationSpace _apprSpace)
-            :base(_apprSpace)
+        public QuickReductProcessor(DecisionSystem _deciSystem)
+            : base(_deciSystem)
         { }
 
         public IEnumerable<int> LastResult
@@ -28,11 +28,11 @@ namespace MUIT2013.DataMining
         /// <summary>
         /// implementation of QuickReduct algorithm 
         /// </summary>
-        private void Process()
+        protected void Process()
         {
             // dependency degree of all attributes
             HashSet<int> attrs = new HashSet<int>(this.DS.ConditionAttributes);
-            float deDegreeAll = this.CalcDependencyDegree(attrs);
+            float deDegreeAll = this.ValuateAttrs(attrs);
             HashSet<int> newReduct = new HashSet<int>();
             float deDegreeReduct = 0;
             foreach (int attr in attrs) {
@@ -40,7 +40,8 @@ namespace MUIT2013.DataMining
 
                 HashSet<int> X = new HashSet<int>(newReduct);
                 X.Add(attr);
-                float deDegreeX = this.CalcDependencyDegree(X);
+                Console.WriteLine("Test attr: " + string.Join(",", X));
+                float deDegreeX = this.ValuateAttrs(X);
                 if (deDegreeReduct < deDegreeX)
                 {
                     newReduct = X;
@@ -51,13 +52,16 @@ namespace MUIT2013.DataMining
                 this.results.Add(newReduct);
         }
 
-        /// <summary>
-        /// Current only support only one denpendent attribute, 
-        ///     which is decision attr in DecisionSystem object
-        /// </summary>
-        /// <param name="targetAttrs"></param>
-        /// <param name="dependentAttrs"></param>
-        /// <returns></returns>
+        // This function could be overried in child classes of other
+        //   algorithms for finding reducts
+        protected float ValuateAttrs(IEnumerable<int> targetAttrs)
+        {
+            return this.CalcDependencyDegree(targetAttrs);
+        }
+
+        
+        // Current only support only one denpendent attribute, 
+        //   which is decision attr in DecisionSystem object
         private float CalcDependencyDegree(IEnumerable<int> targetAttrs)
         {
             // cardinal number of object univers

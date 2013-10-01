@@ -6,17 +6,14 @@ using System.Threading.Tasks;
 
 namespace MUIT2013.DataMining
 {   
-    class ReductProcessor
+    public class ReductProcessor
     {
-        public ApproximationSpace ApprSpace { get; private set; }
-        public DecisionSystem DS { 
-            get { return this.ApprSpace.IS; } 
-        }
+        public DecisionSystem DS {get; private set;}
         protected List<IEnumerable<int>> results = new List<IEnumerable<int>>();
 
-        public ReductProcessor(ApproximationSpace apprSpace)
+        public ReductProcessor(DecisionSystem _deciSystem)
         {
-            ApprSpace = apprSpace;
+            DS = _deciSystem;
         }
     }
 }

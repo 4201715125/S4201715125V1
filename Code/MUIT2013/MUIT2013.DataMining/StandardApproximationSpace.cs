@@ -51,10 +51,21 @@ namespace MUIT2013.DataMining
         /// <returns>Lower Approximation of $X$</returns>
         public override IEnumerable<double?[]> LowerApproximation(Func<double?[], bool> fX)
         {
-            return IS.Universe
-                .Select(x => IndiscernibilityClass(x))
-                .Where(Ix => Ix.All(x => fX(x)))
-                .Aggregate((lowX, Ix) => lowX.Union(Ix));
+            try
+            {
+                var rs = IS.Universe
+                    .Select(x => IndiscernibilityClass(x))
+                    .Where(Ix => Ix.All(x => fX(x)))
+                    .Aggregate((lowX, Ix) => lowX.Union(Ix));
+                return rs;
+            }
+            catch (InvalidOperationException e)
+            {
+                return new double?[][]{
+                    new double?[] {}
+                };
+            }
+            
         }
         public override IEnumerable<double?[]> UpperApproximation(Func<double?[], bool> fX)
         {
