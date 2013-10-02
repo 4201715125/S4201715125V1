@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MUIT2013.DataMining
 {
@@ -39,22 +38,21 @@ namespace MUIT2013.DataMining
         protected IEnumerable<IEnumerable<double?[]>> iClasses;
         public virtual IEnumerable<IEnumerable<double?[]>> IndiscernibilityClasses()
         {
-            if (iClasses == null) iClasses = IS.Universe.Select(x => IndiscernibilityClass(x));
-            return iClasses;
+            return iClasses ?? (iClasses = IS.Universe.Select(IndiscernibilityClass));
         }
 
         public virtual IEnumerable<double?[]> LowerApproximation(IEnumerable<double?[]> X)
         {
-            return IS.Universe
-                .Select(x => IndiscernibilityClass(x))
+            Trace.WriteLine("General Lower Aprroximation");
+            return IndiscernibilityClasses()
                 .Where(Ix => RoughIncl(Ix, X) == 1d)
                 .Aggregate((lowX, Ix) => lowX.Union(Ix))
                 ;
         }
         public virtual IEnumerable<double?[]> UpperApproximation(IEnumerable<double?[]> X)
         {
-            return IS.Universe
-                .Select(x => IndiscernibilityClass(x))
+            Trace.WriteLine("General Upper Aprroximation");
+            return IndiscernibilityClasses()
                 .Where(Ix => RoughIncl(Ix, X) > 0d)
                 .Aggregate((lowX, Ix) => lowX.Union(Ix))
                 ;
@@ -67,14 +65,13 @@ namespace MUIT2013.DataMining
         /// <returns>Lower Approximation of $X$</returns>
         public virtual IEnumerable<double?[]> LowerApproximation(Func<double?[], bool> fX)
         {
-            return LowerApproximation(IS.Universe.Where(x => fX(x)));
+            return LowerApproximation(IS.Universe.Where(fX));
         }
         public virtual IEnumerable<double?[]> UpperApproximation(Func<double?[], bool> fX)
         {
-            return UpperApproximation(IS.Universe.Where(x => fX(x)));
+            return UpperApproximation(IS.Universe.Where(fX));
         }
-        #endregion
-
+        
         public virtual IEnumerable<double?[]> LowerApproximation(double decisionValue)
         {
             return LowerApproximation(x => x[IS.DecisionAttribute] == decisionValue);
@@ -84,12 +81,25 @@ namespace MUIT2013.DataMining
             return UpperApproximation(x => x[IS.DecisionAttribute] == decisionValue);
         }
 
-        public virtual IEnumerable<double?[]> PositiveRegion(IEnumerable<IEnumerable<double?[]>> Xs){
-            return Xs.Select(X => LowerApproximation(X)).Aggregate((X, Y) => X.Union(Y));
+        public virtual IEnumerable<double?[]> PositiveRegion(IEnumerable<IEnumerable<double?[]>> Xs)
+        {
+            return Xs.Select(LowerApproximation)
+                     .Aggregate((X, Y) => X.Union(Y))
+                     ;
+        }
+        public virtual IEnumerable<double?[]> PositiveRegion(IEnumerable<Func<double?[], bool>> fXs)
+        {
+            return fXs.Select(LowerApproximation)
+                      .Aggregate((X, Y) => X.Union(Y))
+                      ;
         }
         public virtual IEnumerable<double?[]> PositiveRegion(int decisionAttrIndex)
         {
-            return IS.AttributesDomain[decisionAttrIndex].Select(decisionValue => LowerApproximation(decisionValue)).Aggregate((X, Y) => X.Union(Y));
+            return IS.AttributesDomain[decisionAttrIndex]
+                .Select(LowerApproximation)
+                .Aggregate((X, Y) => X.Union(Y))
+                ;
         }
+        #endregion
     }
 }
