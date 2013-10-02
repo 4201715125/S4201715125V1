@@ -13,7 +13,7 @@ namespace MUIT2013.Tests
         {
             var infSys = new DecisionSystem
             { // KhuPN - Table 2 page 5
-                Universe = new double?[][] 
+                Universe = new[]
                 {   //            id  1  2  3  4
                     new double?[]{ 1, 0, 1, 1, 1 },
                     new double?[]{ 2, 1, 0, 1, 1 },
@@ -25,7 +25,7 @@ namespace MUIT2013.Tests
                 ConditionAttributes = new[] { 1, 2, 3 },
                 DecisionAttributes = new[] { 4 },
                 DecisionAttribute = 4,
-                AttributesDomain = new double[][] 
+                AttributesDomain = new[]
                 { 
                     null, // no need for "id"
                     new double[]{ 0, 1    },
@@ -44,26 +44,26 @@ namespace MUIT2013.Tests
             // Exmaple 3 page 5
             var partitions = aprSpace.IndiscernibilityClasses();
 
-            var d = 4;
+            const int d = 4;
             var X0 = infSys.Universe.Where(x => x[d] == 0);
             var lX0 = aprSpace.LowerApproximation(0);
             var uX0 = aprSpace.UpperApproximation(0);
 
             Func<double?[], bool> fX1 = x => x[d] == 1;
-            var X1 = infSys.Universe.Where(x => fX1(x));
+            var X1 = infSys.Universe.Where(fX1);
             var lX1 = aprSpace.LowerApproximation(
                 //fX
                 //X
-                1d
+                decisionValue:1d
                 ).OrderBy(x => x[0]);
             var uX1 = aprSpace.UpperApproximation(
                 //fX
                 //X
-                1d
+                decisionValue:1d
                 ).OrderBy(x => x[0]);
             var posX = aprSpace.PositiveRegion(
                 //new[] { X0, X1}
-                d
+                decisionAttrIndex:d
                 ).OrderBy(x => x[0]);
 
             Console.WriteLine("partitions = {\n" +
