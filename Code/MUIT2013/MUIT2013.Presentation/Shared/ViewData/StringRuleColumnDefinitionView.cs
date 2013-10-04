@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MUIT2013.Presentation.Shared.ViewData
 {
-    public class StringRuleColumnDefinitionView : ColumnDefinitionView
+    public class StringRuleAttributeDefinitionView : AttributeDefinitionView
     {
         [Editor(typeof(StringRuleEditor), typeof(UITypeEditor))]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
@@ -20,7 +20,7 @@ namespace MUIT2013.Presentation.Shared.ViewData
         [DisplayName("Rule Collection")]
         public StringRuleCollection RuleCollection { get; set; }
 
-        public StringRuleColumnDefinitionView(ColumnDefinition columnDefinition) : base(columnDefinition)
+        public StringRuleAttributeDefinitionView(AttributeDefinition AttributeDefinition) : base(AttributeDefinition)
         {
             RuleCollection = new StringRuleCollection();
         }

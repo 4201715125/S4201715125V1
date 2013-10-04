@@ -45,7 +45,7 @@ namespace MUIT2013.DataMining.AttributeRule
 
         public int Destination { get; set; }
 
-        public int? Apply(string source)
+        public double? Apply(string source)
         {
             int compareWithMin = string.Compare(source, From);
             int compareWithMax = string.Compare(source, To);

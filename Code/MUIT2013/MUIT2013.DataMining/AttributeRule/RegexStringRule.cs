@@ -23,9 +23,9 @@ namespace MUIT2013.DataMining.AttributeRule
 
         public int Destination { get; set; }
 
-        private Regex regex;        
+        private Regex regex;
 
-        public int? Apply(string source)
+        public double? Apply(string source)
         {
 
             if (regex!=null && regex.IsMatch(source))

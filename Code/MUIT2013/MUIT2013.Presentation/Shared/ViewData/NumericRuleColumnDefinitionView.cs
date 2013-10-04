@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MUIT2013.Presentation.Shared.ViewData
 {
-    public class NumericRuleColumnDefinitionView : ColumnDefinitionView
+    public class NumericRuleAttributeDefinitionView : AttributeDefinitionView
     {
         [Editor(typeof(NumericRuleEditor), typeof(UITypeEditor))]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
@@ -20,8 +20,8 @@ namespace MUIT2013.Presentation.Shared.ViewData
         [DisplayName("Rule Collection")]        
         public NumericRuleCollection RuleCollection { get; set; }
 
-        public NumericRuleColumnDefinitionView(ColumnDefinition columnDefinition)
-            : base(columnDefinition)
+        public NumericRuleAttributeDefinitionView(AttributeDefinition AttributeDefinition)
+            : base(AttributeDefinition)
         {
             RuleCollection = new NumericRuleCollection();
         }

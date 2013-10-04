@@ -9,13 +9,13 @@ namespace MUIT2013.DataMining.AttributeRule
 {    
     public class MultiplyNumericRule : INumericRule
     {        
-        public float Factor { get; set; }        
+        public double Factor { get; set; }        
         public MultiplyNumericRule()
         {
             
         }
 
-        public float? Apply(float source)
+        public double? Apply(double source)
         {            
             return source * Factor;
         }
@@ -38,9 +38,9 @@ namespace MUIT2013.DataMining.AttributeRule
 
         public object Apply(object source)
         {
-            if (source is float)
+            if (source is double)
             {
-                return Apply(float.Parse(source.ToString()));
+                return Apply(double.Parse(source.ToString()));
             }
             return source;
         }

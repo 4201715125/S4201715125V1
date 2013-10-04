@@ -31,7 +31,7 @@
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tpProjectInfo = new System.Windows.Forms.TabPage();
             this.tpProjectConfig = new System.Windows.Forms.TabPage();
-            this.dgvColumnDefinition = new System.Windows.Forms.DataGridView();
+            this.dgvAttributeDefinition = new System.Windows.Forms.DataGridView();
             this.dgvcName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvcDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvcIsCondition = new System.Windows.Forms.DataGridViewCheckBoxColumn();
@@ -41,14 +41,14 @@
             this.gbToolBar = new System.Windows.Forms.GroupBox();
             this.btnCreateMapTable = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
-            this.gvColumnProperties = new System.Windows.Forms.GroupBox();
-            this.pgColumnDefinition = new System.Windows.Forms.PropertyGrid();
+            this.gvAttributeProperties = new System.Windows.Forms.GroupBox();
+            this.pgAttributeDefinition = new System.Windows.Forms.PropertyGrid();
             this.cbColumnType = new System.Windows.Forms.ComboBox();
             this.tabControl.SuspendLayout();
             this.tpProjectConfig.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvColumnDefinition)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAttributeDefinition)).BeginInit();
             this.gbToolBar.SuspendLayout();
-            this.gvColumnProperties.SuspendLayout();
+            this.gvAttributeProperties.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl
@@ -74,9 +74,9 @@
             // 
             // tpProjectConfig
             // 
-            this.tpProjectConfig.Controls.Add(this.dgvColumnDefinition);
+            this.tpProjectConfig.Controls.Add(this.dgvAttributeDefinition);
             this.tpProjectConfig.Controls.Add(this.gbToolBar);
-            this.tpProjectConfig.Controls.Add(this.gvColumnProperties);
+            this.tpProjectConfig.Controls.Add(this.gvAttributeProperties);
             this.tpProjectConfig.Location = new System.Drawing.Point(4, 22);
             this.tpProjectConfig.Name = "tpProjectConfig";
             this.tpProjectConfig.Padding = new System.Windows.Forms.Padding(3);
@@ -85,32 +85,32 @@
             this.tpProjectConfig.Text = "Configuration";
             this.tpProjectConfig.UseVisualStyleBackColor = true;
             // 
-            // dgvColumnDefinition
+            // dgvAttributeDefinition
             // 
-            this.dgvColumnDefinition.AllowUserToAddRows = false;
-            this.dgvColumnDefinition.AllowUserToDeleteRows = false;
-            this.dgvColumnDefinition.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvColumnDefinition.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvAttributeDefinition.AllowUserToAddRows = false;
+            this.dgvAttributeDefinition.AllowUserToDeleteRows = false;
+            this.dgvAttributeDefinition.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvAttributeDefinition.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgvcName,
             this.dgvcDescription,
             this.dgvcIsCondition,
             this.dgvcIsDecision,
             this.dgvcValidationStatus,
             this.dgvcAction});
-            this.dgvColumnDefinition.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvColumnDefinition.Location = new System.Drawing.Point(3, 49);
-            this.dgvColumnDefinition.Name = "dgvColumnDefinition";
-            this.dgvColumnDefinition.ReadOnly = true;
-            this.dgvColumnDefinition.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvColumnDefinition.Size = new System.Drawing.Size(565, 390);
-            this.dgvColumnDefinition.TabIndex = 4;
-            this.dgvColumnDefinition.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvColumnDefinition_CellContentClick);
-            this.dgvColumnDefinition.SelectionChanged += new System.EventHandler(this.dgvColumnDefinition_SelectionChanged);
+            this.dgvAttributeDefinition.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvAttributeDefinition.Location = new System.Drawing.Point(3, 49);
+            this.dgvAttributeDefinition.Name = "dgvAttributeDefinition";
+            this.dgvAttributeDefinition.ReadOnly = true;
+            this.dgvAttributeDefinition.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvAttributeDefinition.Size = new System.Drawing.Size(565, 390);
+            this.dgvAttributeDefinition.TabIndex = 4;
+            this.dgvAttributeDefinition.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAttributeDefinition_CellContentClick);
+            this.dgvAttributeDefinition.SelectionChanged += new System.EventHandler(this.dgvAttributeDefinition_SelectionChanged);
             // 
             // dgvcName
             // 
             this.dgvcName.DataPropertyName = "RawName";
-            this.dgvcName.HeaderText = "Column Name";
+            this.dgvcName.HeaderText = "Attribute Name";
             this.dgvcName.MinimumWidth = 200;
             this.dgvcName.Name = "dgvcName";
             this.dgvcName.ReadOnly = true;
@@ -125,8 +125,8 @@
             // 
             // dgvcIsCondition
             // 
-            this.dgvcIsCondition.DataPropertyName = "IsCondition";
-            this.dgvcIsCondition.HeaderText = "Condition?";
+            this.dgvcIsCondition.DataPropertyName = "IsIdentifier";
+            this.dgvcIsCondition.HeaderText = "Identifier?";
             this.dgvcIsCondition.Name = "dgvcIsCondition";
             this.dgvcIsCondition.ReadOnly = true;
             // 
@@ -186,26 +186,26 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // gvColumnProperties
+            // gvAttributeProperties
             // 
-            this.gvColumnProperties.Controls.Add(this.pgColumnDefinition);
-            this.gvColumnProperties.Controls.Add(this.cbColumnType);
-            this.gvColumnProperties.Dock = System.Windows.Forms.DockStyle.Right;
-            this.gvColumnProperties.Location = new System.Drawing.Point(568, 3);
-            this.gvColumnProperties.Name = "gvColumnProperties";
-            this.gvColumnProperties.Size = new System.Drawing.Size(283, 436);
-            this.gvColumnProperties.TabIndex = 3;
-            this.gvColumnProperties.TabStop = false;
-            this.gvColumnProperties.Text = "Column Properties";
+            this.gvAttributeProperties.Controls.Add(this.pgAttributeDefinition);
+            this.gvAttributeProperties.Controls.Add(this.cbColumnType);
+            this.gvAttributeProperties.Dock = System.Windows.Forms.DockStyle.Right;
+            this.gvAttributeProperties.Location = new System.Drawing.Point(568, 3);
+            this.gvAttributeProperties.Name = "gvAttributeProperties";
+            this.gvAttributeProperties.Size = new System.Drawing.Size(283, 436);
+            this.gvAttributeProperties.TabIndex = 3;
+            this.gvAttributeProperties.TabStop = false;
+            this.gvAttributeProperties.Text = "Attribute Properties";
             // 
-            // pgColumnDefinition
+            // pgAttributeDefinition
             // 
-            this.pgColumnDefinition.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pgColumnDefinition.Location = new System.Drawing.Point(3, 37);
-            this.pgColumnDefinition.Name = "pgColumnDefinition";
-            this.pgColumnDefinition.Size = new System.Drawing.Size(277, 396);
-            this.pgColumnDefinition.TabIndex = 0;
-            this.pgColumnDefinition.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.pgColumnDefinition_PropertyValueChanged);
+            this.pgAttributeDefinition.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pgAttributeDefinition.Location = new System.Drawing.Point(3, 37);
+            this.pgAttributeDefinition.Name = "pgAttributeDefinition";
+            this.pgAttributeDefinition.Size = new System.Drawing.Size(277, 396);
+            this.pgAttributeDefinition.TabIndex = 0;
+            this.pgAttributeDefinition.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.pgAttributeDefinition_PropertyValueChanged);
             // 
             // cbColumnType
             // 
@@ -234,9 +234,9 @@
             this.Load += new System.EventHandler(this.ConfigurationForm_Load);
             this.tabControl.ResumeLayout(false);
             this.tpProjectConfig.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvColumnDefinition)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAttributeDefinition)).EndInit();
             this.gbToolBar.ResumeLayout(false);
-            this.gvColumnProperties.ResumeLayout(false);
+            this.gvAttributeProperties.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -246,9 +246,9 @@
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tpProjectInfo;
         private System.Windows.Forms.TabPage tpProjectConfig;
-        private System.Windows.Forms.PropertyGrid pgColumnDefinition;
-        private System.Windows.Forms.GroupBox gvColumnProperties;
-        private System.Windows.Forms.DataGridView dgvColumnDefinition;
+        private System.Windows.Forms.PropertyGrid pgAttributeDefinition;
+        private System.Windows.Forms.GroupBox gvAttributeProperties;
+        private System.Windows.Forms.DataGridView dgvAttributeDefinition;
         private System.Windows.Forms.GroupBox gbToolBar;
         private System.Windows.Forms.ComboBox cbColumnType;
         private System.Windows.Forms.Button btnCreateMapTable;

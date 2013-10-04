@@ -15,44 +15,61 @@ using System.ComponentModel.Design;
 
 namespace MUIT2013.Presentation.Shared.ViewData
 {
-    public class ColumnDefinitionView
+    public class AttributeDefinitionView
     {
         [Browsable(true)]
         [ReadOnly(true)]
-        [Description("The name of column")]
+        [Description("The name of attribute")]
         [Category("General")]
-        [DisplayName("Column Name")]
-        public string RawName { get { return this.ColumnDefinition.RawName; } }        
+        [DisplayName("Attribute Name")]
+        public string RawName { get { return this.AttributeDefinition.RawName; } }
 
         [Browsable(true)]
-        [Description("determine whether the column is a condition attribute or not")]
+        [Description("determine whether the attribute is a identifier or not")]
+        [DisplayName("Is Identifier")]
         [Category("Configuration")]
-        [DisplayName("Is Condition")]
-        public bool IsCondition {
+        public bool IsIdentifier
+        {
             get
             {
-                return this.ColumnDefinition.IsCondition;
+                return this.AttributeDefinition.IsIdentifier;
             }
             set
             {
-                this.ColumnDefinition.IsCondition = value;
+                this.AttributeDefinition.IsIdentifier = value;
             }
         }
 
         [Browsable(true)]
-        [Description("determine whether the column is a decision attribute or not")]
+        [Description("determine whether the attribute is a decision attribute or not")]
         [DisplayName("Is Decision")]
         [Category("Configuration")]
         public bool IsDecision {
             get
             {
-                return this.ColumnDefinition.IsDecision;
+                return this.AttributeDefinition.IsDecision;
             }
             set
             {
-                this.ColumnDefinition.IsDecision = value;
+                this.AttributeDefinition.IsDecision = value;
             }
         }
+
+        [Browsable(true)]
+        [Description("determine whether the attribute is auto encoding or not")]
+        [DisplayName("Is Auto Encoding")]
+        [Category("Configuration")]
+        public bool IsAutoEncoding
+        {
+            get
+            {
+                return this.AttributeDefinition.IsAutoEncoding;
+            }
+            set
+            {
+                this.AttributeDefinition.IsAutoEncoding = value;
+            }
+        }        
 
         [Browsable(true)]
         [Description("description of this attribute")]
@@ -61,10 +78,10 @@ namespace MUIT2013.Presentation.Shared.ViewData
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         public string Description {
             get {
-                return this.ColumnDefinition.Description;
+                return this.AttributeDefinition.Description;
             }
             set {
-                this.ColumnDefinition.Description = value;
+                this.AttributeDefinition.Description = value;
             }
         }
 
@@ -77,11 +94,11 @@ namespace MUIT2013.Presentation.Shared.ViewData
         public string ValidationStatus { get; set; }
 
         [Browsable(false)]
-        public ColumnDefinition ColumnDefinition { get; set; }                 
+        public AttributeDefinition AttributeDefinition { get; set; }                 
 
-        public ColumnDefinitionView(ColumnDefinition columnDefinition)
+        public AttributeDefinitionView(AttributeDefinition AttributeDefinition)
         {
-            this.ColumnDefinition = columnDefinition;            
+            this.AttributeDefinition = AttributeDefinition;            
         }                
     }
 }

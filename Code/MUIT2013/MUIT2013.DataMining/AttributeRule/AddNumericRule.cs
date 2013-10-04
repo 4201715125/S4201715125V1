@@ -9,13 +9,13 @@ namespace MUIT2013.DataMining.AttributeRule
 {
     public class AddNumericRule : INumericRule
     {
-        public float Add { get; set; }
+        public double Add { get; set; }
         public AddNumericRule()
         {
 
         }
 
-        public float? Apply(float source)
+        public double? Apply(double source)
         {
             return source + Add;
         }

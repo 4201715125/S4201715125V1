@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace MUIT2013.DataMining.AttributeRule
 {
-    public interface INumericRule : IGeneralRule
-    {                
-        float? Apply(float source);
+    public interface INumericRule : IRule
+    {
+        double? Apply(double source);
     }
 }

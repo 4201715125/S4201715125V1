@@ -21,11 +21,26 @@ namespace MUIT2013.Presentation.Forms
         }
 
         private void ViewDataForm_Load(object sender, EventArgs e)
-        {
-            var data = dataService.GetViewData(this.tableName);
+        {            
+            var data = dataService.GetViewData(this.tableName).Take(50);
+            var k = data.Select(p => (IDictionary<string, object>)p);            
             var dataTable = new DataTable(this.tableName);
-            
-            dgvGridData.DataSource = data;
+            var first = k.First();
+            foreach (var key in first.Keys)
+	        {
+                dataTable.Columns.Add(key);
+	        }
+
+            foreach (var item in k)
+	        {
+                var row = new List<string>();
+                foreach (var key in item.Keys)
+                {
+                    row.Add(item[key].ToString());
+                }
+                dataTable.Rows.Add(row.ToArray());
+	        }
+            dgvGridData.DataSource = dataTable;
         }
     }
 }

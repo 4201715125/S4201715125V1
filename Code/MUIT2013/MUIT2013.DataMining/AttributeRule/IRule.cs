@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MUIT2013.DataMining.AttributeRule
 {
-    public interface IGeneralRule
+    public interface IRule
     {
         string ToSerialize();
         string GetRuleType();

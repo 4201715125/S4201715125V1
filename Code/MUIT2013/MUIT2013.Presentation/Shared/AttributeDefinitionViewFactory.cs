@@ -9,32 +9,32 @@ using System.Threading.Tasks;
 
 namespace MUIT2013.Presentation.Shared
 {
-    public class ColumnDefinitionViewFactory
+    public class AttributeDefinitionViewFactory
     {
-        private Dictionary<KeyValuePair<long, string>, ColumnDefinitionView> container = new Dictionary<KeyValuePair<long,string>,ColumnDefinitionView>();
-        public  ColumnDefinitionView Create(ColumnDefinition columnDefinition)
+        private Dictionary<KeyValuePair<long, string>, AttributeDefinitionView> container = new Dictionary<KeyValuePair<long,string>,AttributeDefinitionView>();
+        public  AttributeDefinitionView Create(AttributeDefinition AttributeDefinition)
         {
-            var cacheKey = new KeyValuePair<long, string>(columnDefinition.Id, columnDefinition.ColumnType);
-            ColumnDefinitionView cache = null; ;
+            var cacheKey = new KeyValuePair<long, string>(AttributeDefinition.Id, AttributeDefinition.ColumnType);
+            AttributeDefinitionView cache = null; ;
             if (container.ContainsKey(cacheKey)) cache = container[cacheKey];
             else
             {
-                if (columnDefinition.ColumnType == "String")
+                if (AttributeDefinition.ColumnType == "String")
                 {
-                    StringRuleColumnDefinitionView srcdv = new StringRuleColumnDefinitionView(columnDefinition);
+                    StringRuleAttributeDefinitionView srcdv = new StringRuleAttributeDefinitionView(AttributeDefinition);
                     StringRuleFactory factory = new StringRuleFactory();
-                    columnDefinition.MapRules.ForEach(k => {
+                    AttributeDefinition.MapRules.ForEach(k => {
                         IStringRule rule = factory.CreateRule(k.RuleType, k.RuleContent);
                         if(rule!=null) srcdv.RuleCollection.Add(rule);
                     });
                     cache = container[cacheKey] = srcdv;
                     
                 }
-                else if (columnDefinition.ColumnType == "Numeric")
+                else if (AttributeDefinition.ColumnType == "Numeric")
                 {                    
-                    NumericRuleColumnDefinitionView srcdv = new NumericRuleColumnDefinitionView(columnDefinition);
+                    NumericRuleAttributeDefinitionView srcdv = new NumericRuleAttributeDefinitionView(AttributeDefinition);
                     NumericRuleFactory factory = new NumericRuleFactory();
-                    columnDefinition.MapRules.ForEach(k =>
+                    AttributeDefinition.MapRules.ForEach(k =>
                     {
                         INumericRule rule = factory.CreateRule(k.RuleType, k.RuleContent);
                         if (rule != null) srcdv.RuleCollection.Add(rule);                        

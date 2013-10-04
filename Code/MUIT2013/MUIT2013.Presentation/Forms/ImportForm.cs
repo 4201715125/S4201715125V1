@@ -115,7 +115,11 @@ namespace MUIT2013.Presentation.Forms
 
         private void btnViewMapData_Click(object sender, EventArgs e)
         {
-
+            if (dgvDataFile.SelectedRows.Count == 0) return;
+            DataFile selectedDataFile = (DataFile)dgvDataFile.SelectedRows[0].DataBoundItem;
+            var form = new ViewDataForm(selectedDataFile.MapTableName);
+            //form.MdiParent = this;
+            form.Show();
         }
     }
 }
