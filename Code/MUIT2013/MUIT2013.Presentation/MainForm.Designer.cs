@@ -40,6 +40,8 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.handlersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.approximationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -47,6 +49,7 @@
             // 
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.projectToolStripMenuItem,
+            this.handlersToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
@@ -134,8 +137,23 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutToolStripMenuItem.Text = "About";
+            // 
+            // handlersToolStripMenuItem
+            // 
+            this.handlersToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.approximationsToolStripMenuItem});
+            this.handlersToolStripMenuItem.Name = "handlersToolStripMenuItem";
+            this.handlersToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
+            this.handlersToolStripMenuItem.Text = "Handlers";
+            // 
+            // approximationsToolStripMenuItem
+            // 
+            this.approximationsToolStripMenuItem.Name = "approximationsToolStripMenuItem";
+            this.approximationsToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.approximationsToolStripMenuItem.Text = "Approximations";
+            this.approximationsToolStripMenuItem.Click += new System.EventHandler(this.approximationsToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -169,6 +187,8 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem handlersToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem approximationsToolStripMenuItem;
     }
 }
 

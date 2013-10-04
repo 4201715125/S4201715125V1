@@ -9,8 +9,9 @@ namespace MUIT2013.DataMining.AttributeRule
 {    
     public class RangeNumericRule : INumericRule
     {
-        private float from;
-        public float From {
+        private double from;
+        public double From
+        {
             get
             {
                 return from;
@@ -25,8 +26,9 @@ namespace MUIT2013.DataMining.AttributeRule
             } 
         }
 
-        private float to;
-        public float To {
+        private double to;
+        public double To
+        {
             get {
                 return to;
             }
@@ -39,9 +41,9 @@ namespace MUIT2013.DataMining.AttributeRule
             } 
         }
 
-        public float Destination { get; set; }
+        public double Destination { get; set; }
 
-        public float? Apply(float source)
+        public double? Apply(double source)
         {
             if (source >= From && source <= To)
             {
@@ -68,9 +70,9 @@ namespace MUIT2013.DataMining.AttributeRule
 
         public object Apply(object source)
         {
-            if (source is float)
+            if (source is double)
             {
-                return Apply(float.Parse(source.ToString()));
+                return Apply(double.Parse(source.ToString()));
             }
             return source;
         }

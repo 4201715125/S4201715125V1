@@ -10,16 +10,16 @@ using System.Data.Common;
 
 namespace MUIT2013.Data.Repository
 {
-    public class ColumnDefinitionRepository : RepositoryBase
+    public class AttributeDefinitionRepository : RepositoryBase
     {        
-        public static long Create(ColumnDefinition model)
+        public static long Create(AttributeDefinition model)
         {
             long id = 0;
             using (var con = EstablishConnection())
             {
                 con.Open();
                 id = con.Query<long>(@"
-                    INSERT INTO ColumnDefinitions(name, rawName, dataFileId)
+                    INSERT INTO AttributeDefinitions(name, rawName, dataFileId)
                     VALUES(@Name,@RawName, @DataFileId);
                     SELECT last_insert_rowid();
                 ", model).First();
@@ -29,31 +29,31 @@ namespace MUIT2013.Data.Repository
             return id;
         }
 
-        public static IEnumerable<ColumnDefinition> GetList(long dataFileId)
+        public static IEnumerable<AttributeDefinition> GetList(long dataFileId)
         {
-            IEnumerable<ColumnDefinition> models;
+            IEnumerable<AttributeDefinition> models;
             using (var con = EstablishConnection())
             {
                 con.Open();
 
-                models = con.Query<ColumnDefinition>(@"
-                    SELECT * FROM ColumnDefinitions cd                    
+                models = con.Query<AttributeDefinition>(@"
+                    SELECT * FROM AttributeDefinitions cd                    
                     WHERE DataFileId IN (@DataFileId)
                     ;
                 ", new { DataFileId = dataFileId });
-                var columnDefinitionIds = string.Join(",", models.Select(p => p.Id));
+                var AttributeDefinitionIds = string.Join(",", models.Select(p => p.Id));
                 var mapRuleModels = con.Query<MapRule>(string.Format(@"
                     SELECT * FROM MapRules
-                    WHERE ColumnDefinitionId IN ({0})", columnDefinitionIds));
+                    WHERE AttributeDefinitionId IN ({0})", AttributeDefinitionIds));
 
                 foreach (var model in models)
                 {
                     foreach (var mapRuleModel in mapRuleModels)
                     {
-                        if (mapRuleModel.ColumnDefinitionId == model.Id)
+                        if (mapRuleModel.AttributeDefinitionId == model.Id)
                         {
                             model.MapRules.Add(mapRuleModel);
-                            mapRuleModel.ColumnDefinition = model;
+                            mapRuleModel.AttributeDefinition = model;
                         }
                     }
                 }
@@ -63,20 +63,21 @@ namespace MUIT2013.Data.Repository
             return models;
         }
 
-        public static void BulkInsert(DbConnection con, List<ColumnDefinition> models)
+        public static void BulkInsert(DbConnection con, List<AttributeDefinition> models)
         {       
             con.Execute(@"
-                INSERT INTO ColumnDefinitions(name, rawName, dataFileId)
-                VALUES(@Name,@RawName, @DataFileId);                
+                INSERT INTO AttributeDefinitions(name, rawName, dataFileId, attributeIndex)
+                VALUES(@Name,@RawName, @DataFileId, @AttributeIndex);                
             ", models);          
         }
 
-        public static void BulkUpdate(DbConnection con, List<ColumnDefinition> models)
+        public static void BulkUpdate(DbConnection con, List<AttributeDefinition> models)
         {
             StringBuilder queryBuilder = new StringBuilder();
-            string updateColumnDefinitionQuery = @"
-                UPDATE ColumnDefinitions
-                SET IsCondition = @IsCondition,
+            string updateAttributeDefinitionQuery = @"
+                UPDATE AttributeDefinitions
+                SET IsIdentifier = @IsIdentifier,
+                IsAutoEncoding = @IsAutoEncoding,
                 IsDecision = @IsDecision,
                 ColumnType = @ColumnType,
                 Description = @Description,
@@ -85,14 +86,14 @@ namespace MUIT2013.Data.Repository
             ";
 
             string deleteMapRuleQuery = @"
-                DELETE FROM MapRules WHERE ColumnDefinitionId = @ColumnDefinitionId;
+                DELETE FROM MapRules WHERE AttributeDefinitionId = @AttributeDefinitionId;
             ";
 
             string insertMapRuleQuery = @"
-                INSERT INTO MapRules(ColumnDefinitionId, RuleContent, RuleType) VALUES(@ColumnDefinitionId, @RuleContent, @RuleType);
+                INSERT INTO MapRules(AttributeDefinitionId, RuleContent, RuleType) VALUES(@AttributeDefinitionId, @RuleContent, @RuleType);
             ";
 
-            con.Execute(updateColumnDefinitionQuery, models);
+            con.Execute(updateAttributeDefinitionQuery, models);
             var mapRuleModels = new List<MapRule>();
             models.ForEach(p => {
                 mapRuleModels.AddRange(p.MapRules);
@@ -105,7 +106,7 @@ namespace MUIT2013.Data.Repository
             }                       
         }
 
-        public static void BulkUpdate(List<ColumnDefinition> models)
+        public static void BulkUpdate(List<AttributeDefinition> models)
         {
             using (var con = EstablishConnection())
             {

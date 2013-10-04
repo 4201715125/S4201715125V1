@@ -17,14 +17,16 @@ namespace MUIT2013.Presentation.Forms
         protected ProjectService projectService;
         protected DataService dataService;
         protected DataFileService dataFileService;
-        protected ColumnDefinitionService columnDefinitionService;
+        protected HandlerTrackerService handerTrackerService;
+        protected AttributeDefinitionService AttributeDefinitionService;
         protected static DataFile ActivateDataFile;
         public FormBase()
         {            
             projectService = new ProjectService();
             dataService = new DataService();
             dataFileService = new DataFileService();
-            columnDefinitionService = new ColumnDefinitionService();
+            AttributeDefinitionService = new AttributeDefinitionService();
+            handerTrackerService = new HandlerTrackerService();
         }
     }
 }

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace MUIT2013.DataMining.AttributeRule
 {
-    public interface IStringRule : IGeneralRule
+    public interface IStringRule : IRule
     {
-        int? Apply(string source);
+        double? Apply(string source);
     }
 }

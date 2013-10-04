@@ -9,15 +9,15 @@ namespace MUIT2013.DataMining.AttributeRule
 {    
     public class SingleNumericRule: INumericRule
     {
-        public float Source { get; set; }
-        public float Destination { get; set; }
+        public double Source { get; set; }
+        public double Destination { get; set; }
 
         public SingleNumericRule()
         {
 
         }
 
-        public float? Apply(float source)
+        public double? Apply(double source)
         {
             if (source == Source)
             {
@@ -44,9 +44,9 @@ namespace MUIT2013.DataMining.AttributeRule
 
         public object Apply(object source)
         {
-            if (source is float)
+            if (source is double)
             {
-                return Apply(float.Parse(source.ToString()));
+                return Apply(double.Parse(source.ToString()));
             }
             return source;
         }

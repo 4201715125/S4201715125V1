@@ -9,11 +9,11 @@ namespace MUIT2013.Data.Models
     public class MapRule
     {
         public long Id { get; set; }
-        public long ColumnDefinitionId { get; set; }
+        public long AttributeDefinitionId { get; set; }
         public string RuleContent { get; set; }
         public string RuleType { get; set; }
 
-        public ColumnDefinition ColumnDefinition { get; set; }
+        public AttributeDefinition AttributeDefinition { get; set; }
 
         public MapRule()
         {

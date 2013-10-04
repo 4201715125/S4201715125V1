@@ -18,14 +18,14 @@ namespace MUIT2013.Presentation.Forms
 {
     public partial class ConfigurationForm : FormBase
     {
-        public List<ColumnDefinition> ColumnDefinitionCollection;
-        private ColumnDefinitionViewFactory cdvFactory;
+        public List<AttributeDefinition> AttributeDefinitionCollection;
+        private AttributeDefinitionViewFactory cdvFactory;
         public ConfigurationForm()
         {
             InitializeComponent();
-            dgvColumnDefinition.AutoGenerateColumns = false;
+            dgvAttributeDefinition.AutoGenerateColumns = false;
             ActivateDataFile = dataFileService.GetActivedDataFile();
-            cdvFactory = new ColumnDefinitionViewFactory();
+            cdvFactory = new AttributeDefinitionViewFactory();
         }
 
         #region Events
@@ -37,15 +37,15 @@ namespace MUIT2013.Presentation.Forms
             }
             else
             {
-                LoadColumnDefinitions();
+                LoadAttributeDefinitions();
             }
         }
 
-        private void dgvColumnDefinition_SelectionChanged(object sender, EventArgs e)
+        private void dgvAttributeDefinition_SelectionChanged(object sender, EventArgs e)
         {
-            if (dgvColumnDefinition.SelectedRows.Count == 0) return;
-            ColumnDefinition selectedColumnDefinition = (ColumnDefinition)dgvColumnDefinition.SelectedRows[0].DataBoundItem;
-            cbColumnType.SelectedItem = selectedColumnDefinition.ColumnType;
+            if (dgvAttributeDefinition.SelectedRows.Count == 0) return;
+            AttributeDefinition selectedAttributeDefinition = (AttributeDefinition)dgvAttributeDefinition.SelectedRows[0].DataBoundItem;
+            cbColumnType.SelectedItem = selectedAttributeDefinition.ColumnType;
             LoadColumnProperties();
         }
 
@@ -61,51 +61,51 @@ namespace MUIT2013.Presentation.Forms
         #endregion
 
         #region Initialize data
-        private void LoadColumnDefinitions()
+        private void LoadAttributeDefinitions()
         {
             if (ActivateDataFile!=null)
             {
-                dgvColumnDefinition.DataSource = this.ColumnDefinitionCollection = columnDefinitionService.GetList(ActivateDataFile.Id);                 
+                dgvAttributeDefinition.DataSource = this.AttributeDefinitionCollection = AttributeDefinitionService.GetList(ActivateDataFile.Id);                 
             }            
         }
 
         private void LoadColumnProperties()
         {            
-            if (dgvColumnDefinition.SelectedRows.Count == 0) return;
+            if (dgvAttributeDefinition.SelectedRows.Count == 0) return;
             var columnType = cbColumnType.SelectedItem as string;
             if (string.IsNullOrEmpty(columnType)) return;
-            ColumnDefinition selectedColumnDefinition = (ColumnDefinition)dgvColumnDefinition.SelectedRows[0].DataBoundItem;
-            selectedColumnDefinition.ColumnType = columnType;
-            pgColumnDefinition.SelectedObject = cdvFactory.Create(selectedColumnDefinition);            
+            AttributeDefinition selectedAttributeDefinition = (AttributeDefinition)dgvAttributeDefinition.SelectedRows[0].DataBoundItem;
+            selectedAttributeDefinition.ColumnType = columnType;
+            pgAttributeDefinition.SelectedObject = cdvFactory.Create(selectedAttributeDefinition);            
         }
 
         private void Save()
         {
-            this.ColumnDefinitionCollection.ForEach(p =>
+            this.AttributeDefinitionCollection.ForEach(p =>
             {
-                var columnDefinitionView = cdvFactory.Create(p);
+                var AttributeDefinitionView = cdvFactory.Create(p);
                 p.MapRules = new List<MapRule>();
-                if (columnDefinitionView is StringRuleColumnDefinitionView)
+                if (AttributeDefinitionView is StringRuleAttributeDefinitionView)
                 {
-                    var cdv = columnDefinitionView as StringRuleColumnDefinitionView;
+                    var cdv = AttributeDefinitionView as StringRuleAttributeDefinitionView;
                     cdv.RuleCollection.ForEach(k =>
                     {
                         p.MapRules.Add(new MapRule
                         {
-                            ColumnDefinitionId = p.Id,
+                            AttributeDefinitionId = p.Id,
                             RuleType = k.GetRuleType(),
                             RuleContent = k.ToSerialize()
                         });
                     });
                 }
-                else if (columnDefinitionView is NumericRuleColumnDefinitionView)
+                else if (AttributeDefinitionView is NumericRuleAttributeDefinitionView)
                 {
-                    var cdv = columnDefinitionView as NumericRuleColumnDefinitionView;
+                    var cdv = AttributeDefinitionView as NumericRuleAttributeDefinitionView;
                     cdv.RuleCollection.ForEach(k =>
                     {
                         p.MapRules.Add(new MapRule
                         {
-                            ColumnDefinitionId = p.Id,
+                            AttributeDefinitionId = p.Id,
                             RuleType = k.GetRuleType(),
                             RuleContent = k.ToSerialize()
                         });
@@ -114,58 +114,62 @@ namespace MUIT2013.Presentation.Forms
 
             });
 
-            columnDefinitionService.BulkUpdate(this.ColumnDefinitionCollection);
+            AttributeDefinitionService.BulkUpdate(this.AttributeDefinitionCollection);
         }
         #endregion
 
         private void btnCreateMapTable_Click(object sender, EventArgs e)
         {
-            List<ColumnDefinition> invalidColumnDefinitions = new List<ColumnDefinition>();
-            for (int i = 0; i < this.ColumnDefinitionCollection.Count; i++)
+            List<AttributeDefinition> invalidAttributeDefinitions = new List<AttributeDefinition>();
+            for (int i = 0; i < this.AttributeDefinitionCollection.Count; i++)
             {
-                var p = this.ColumnDefinitionCollection[i];
-                var columnDefinitionView = cdvFactory.Create(p);
-                bool check = false;
-                if (columnDefinitionView is StringRuleColumnDefinitionView)
+                var p = this.AttributeDefinitionCollection[i];
+                var adv = cdvFactory.Create(p);
+                if (adv.IsAutoEncoding)
                 {
-                    var cdv = columnDefinitionView as StringRuleColumnDefinitionView;
+                    continue;
+                }
+                bool check = false;
+                if (adv is StringRuleAttributeDefinitionView)
+                {
+                    var cdv = adv as StringRuleAttributeDefinitionView;
                     check = dataService.CheckStringRuleInValidationStatus(ActivateDataFile, p, cdv.RuleCollection.ToList());
                 }
-                else if (columnDefinitionView is NumericRuleColumnDefinitionView)
+                else if (adv is NumericRuleAttributeDefinitionView)
                 {
-                    var cdv = columnDefinitionView as NumericRuleColumnDefinitionView;
+                    var cdv = adv as NumericRuleAttributeDefinitionView;
                     check = dataService.CheckNumericRuleInValidationStatus(ActivateDataFile, p, cdv.RuleCollection.ToList());
                 }
                 p.ValidationStatus = check ? "Valid" : "Invalid";
-                if (!check) invalidColumnDefinitions.Add(p);                
+                if (!check) invalidAttributeDefinitions.Add(p);                
             }
-            if (invalidColumnDefinitions.Count>0)
+            if (invalidAttributeDefinitions.Count>0)
             {
-                string message = string.Join(", ", invalidColumnDefinitions.Select(p => p.Name));
-                MessageBox.Show(string.Format("Some columns have been applied invalid rules. Please correct them to create map table again."), "Error", MessageBoxButtons.OK);
+                string message = string.Join(", ", invalidAttributeDefinitions.Select(p => p.Name));
+                MessageBox.Show(string.Format("Some attributes have been applied invalid rules. Please correct them to create map table again."), "Error", MessageBoxButtons.OK);
                 return;
             }
             Save();
-            dataService.CreateMapTable(ActivateDataFile, this.ColumnDefinitionCollection);
-            this.dgvColumnDefinition.Refresh();  
+            dataService.CreateMapTable(ActivateDataFile, this.AttributeDefinitionCollection);
+            this.dgvAttributeDefinition.Refresh();  
         }
 
-        private void dgvColumnDefinition_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvAttributeDefinition_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {            
-            if (e.ColumnIndex == dgvColumnDefinition.Columns["dgvcAction"].Index && e.RowIndex >= 0)
+            if (e.ColumnIndex == dgvAttributeDefinition.Columns["dgvcAction"].Index && e.RowIndex >= 0)
             {
-                var columnDefinition = (ColumnDefinition)dgvColumnDefinition.Rows[e.RowIndex].DataBoundItem;
-                var columnDefinitionView = cdvFactory.Create(columnDefinition);
+                var AttributeDefinition = (AttributeDefinition)dgvAttributeDefinition.Rows[e.RowIndex].DataBoundItem;
+                var AttributeDefinitionView = cdvFactory.Create(AttributeDefinition);
                 IEnumerable<AppliedRuleValue> appliedRuleValues = null;
-                if (columnDefinitionView is StringRuleColumnDefinitionView)
+                if (AttributeDefinitionView is StringRuleAttributeDefinitionView)
                 {
-                    var cdv = columnDefinitionView as StringRuleColumnDefinitionView;
-                    appliedRuleValues = dataService.GetValuesWithNoRuleAppliedInStringRule(ActivateDataFile, columnDefinition, cdv.RuleCollection.ToList());
+                    var cdv = AttributeDefinitionView as StringRuleAttributeDefinitionView;
+                    appliedRuleValues = dataService.GetValuesWithNoRuleAppliedInStringRule(ActivateDataFile, AttributeDefinition, cdv.RuleCollection.ToList());
                 }
-                else if (columnDefinitionView is NumericRuleColumnDefinitionView)
+                else if (AttributeDefinitionView is NumericRuleAttributeDefinitionView)
                 {
-                    var cdv = columnDefinitionView as NumericRuleColumnDefinitionView;
-                    appliedRuleValues = dataService.GetValuesWithNoRuleAppliedInNumericRule(ActivateDataFile, columnDefinition, cdv.RuleCollection.ToList());
+                    var cdv = AttributeDefinitionView as NumericRuleAttributeDefinitionView;
+                    appliedRuleValues = dataService.GetValuesWithNoRuleAppliedInNumericRule(ActivateDataFile, AttributeDefinition, cdv.RuleCollection.ToList());
                 }
 
                 using (var form = new NoRuleForm(appliedRuleValues))
@@ -176,9 +180,9 @@ namespace MUIT2013.Presentation.Forms
             }
         }
 
-        private void pgColumnDefinition_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        private void pgAttributeDefinition_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
-            dgvColumnDefinition.Refresh();
+            dgvAttributeDefinition.Refresh();
         }
 
        

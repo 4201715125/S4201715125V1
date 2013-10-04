@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MUIT2013.DataMining.AttributeRule
+namespace MUIT2013.DataMining.Models
 {
-    public interface INumericRule : IRule
+    public class Attribute
     {
-        double? Apply(double source);
+        public string Name { get; set; }
     }
 }

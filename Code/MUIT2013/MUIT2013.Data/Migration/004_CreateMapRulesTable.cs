@@ -15,7 +15,7 @@ namespace MUIT2013.Data.Migration
                 .WithColumn("Id").AsInt64().PrimaryKey()                
                 .WithColumn("RuleContent").AsString().NotNullable()
                 .WithColumn("RuleType").AsString().NotNullable()
-                .WithColumn("ColumnDefinitionId").AsInt64().ForeignKey("ColumnDefinitions", "Id");
+                .WithColumn("AttributeDefinitionId").AsInt64().ForeignKey("AttributeDefinitions", "Id");
         }
 
         public override void Down()

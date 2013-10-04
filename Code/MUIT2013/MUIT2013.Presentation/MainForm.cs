@@ -1,4 +1,5 @@
 ﻿using MUIT2013.Business;
+using MUIT2013.Data.Models;
 using MUIT2013.Presentation.Forms;
 using System;
 using System.Collections.Generic;
@@ -72,5 +73,24 @@ namespace MUIT2013.Presentation
             exportToolStripMenuItem.Enabled = IsActivated;
         }
         #endregion
+
+        private void approximationsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = new HandlerTrackerForm();
+            form.MdiParent = this;
+
+            form.SelectHandlerTracker += form_SelectHandlerTracker;
+            form.Show();
+        }
+
+        void form_SelectHandlerTracker(object sender, EventArgs e)
+        {
+            var handlerTracker = (HandlerTracker)sender;
+            DataMiningService service = new DataMiningService();
+            DataFileService dataFileService = new DataFileService();
+            AttributeDefinitionService attributeDefinitionService = new AttributeDefinitionService();
+            var attributeDefinitions = attributeDefinitionService.GetList(dataFileService.GetActivedDataFile().Id);
+            service.GetDecisionSystem(attributeDefinitions, handlerTracker.TableName);
+        }
     }
 }

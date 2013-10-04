@@ -10,8 +10,8 @@ namespace MUIT2013.DataMining.AttributeRule
     public class SingleStringRule : IStringRule
     {
         public string Source { get; set; }
-        public int Destination { get; set; }
-        public int? Apply(string source)
+        public double Destination { get; set; }
+        public double? Apply(string source)
         {
             if (source == Source)
             {
