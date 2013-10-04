@@ -38,12 +38,14 @@ namespace MUIT2013.DataMining
         protected IEnumerable<IEnumerable<double?[]>> iClasses;
         public virtual IEnumerable<IEnumerable<double?[]>> IndiscernibilityClasses()
         {
+            Debug.WriteLine("General AS ind-classes");
             return iClasses ?? (iClasses = IS.Universe.Select(IndiscernibilityClass));
         }
 
         public virtual IEnumerable<double?[]> LowerApproximation(IEnumerable<double?[]> X)
         {
-            Trace.WriteLine("General Lower Aprroximation");
+            Debug.WriteLine("General AS Lower Aprroximation");
+
             return IndiscernibilityClasses()
                 .Where(Ix => RoughIncl(Ix, X) == 1d)
                 .Aggregate((lowX, Ix) => lowX.Union(Ix))
@@ -51,7 +53,8 @@ namespace MUIT2013.DataMining
         }
         public virtual IEnumerable<double?[]> UpperApproximation(IEnumerable<double?[]> X)
         {
-            Trace.WriteLine("General Upper Aprroximation");
+            Debug.WriteLine("General AS Upper Aprroximation");
+
             return IndiscernibilityClasses()
                 .Where(Ix => RoughIncl(Ix, X) > 0d)
                 .Aggregate((lowX, Ix) => lowX.Union(Ix))
@@ -83,18 +86,24 @@ namespace MUIT2013.DataMining
 
         public virtual IEnumerable<double?[]> PositiveRegion(IEnumerable<IEnumerable<double?[]>> Xs)
         {
+            Debug.WriteLine("General AS Positive Region");
+
             return Xs.Select(LowerApproximation)
                      .Aggregate((X, Y) => X.Union(Y))
                      ;
         }
         public virtual IEnumerable<double?[]> PositiveRegion(IEnumerable<Func<double?[], bool>> fXs)
         {
+            Debug.WriteLine("General AS Positive Region");
+
             return fXs.Select(LowerApproximation)
                       .Aggregate((X, Y) => X.Union(Y))
                       ;
         }
         public virtual IEnumerable<double?[]> PositiveRegion(int decisionAttrIndex)
         {
+            Debug.WriteLine("General AS Positive Region");
+
             return IS.AttributesDomain[decisionAttrIndex]
                 .Select(LowerApproximation)
                 .Aggregate((X, Y) => X.Union(Y))
