@@ -1,4 +1,5 @@
-﻿using CsvHelper;
+﻿using System.Diagnostics;
+using CsvHelper;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,7 +13,9 @@ namespace MUIT2013.Tests
     {
         public static void Main(string[] args)
         {
-            ASTest.TestAprroximationSpace();
+            //ASTest.TestAprroximationSpace();
+            ReductTest.TestReduct();
+            //Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
         }
     }
 }

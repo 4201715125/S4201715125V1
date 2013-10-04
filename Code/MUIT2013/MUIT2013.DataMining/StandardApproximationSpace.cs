@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MUIT2013.DataMining
 {
@@ -19,29 +18,40 @@ namespace MUIT2013.DataMining
 
         public override IEnumerable<IEnumerable<double?[]>> IndiscernibilityClasses()
         {
-            if (iClasses == null) iClasses = Attrs.Aggregate(
-                    (IEnumerable<IEnumerable<double?[]>>) new[] { IS.Universe },
-                    (partitions, a) => partitions.Select(xs => xs.GroupBy(x => x[a])).HConcat()
+            Debug.WriteLine("Standard AS ind-classes");
+
+            return iClasses ?? 
+                // O( #Univer * #Attribute )
+                (iClasses = Attrs.Aggregate(
+                    (IEnumerable<IEnumerable<double?[]>>) new[] {IS.Universe},
+                    (partitions, a) => partitions.Select(xs => xs.GroupBy(x => x[a])).HConcat())
                 );
 
-            return iClasses;
-            // TODO: a more better way
+            // TODO: a more better way with O( #Univer)
         }
 
         public override IEnumerable<double?[]> LowerApproximation(IEnumerable<double?[]> X)
         {
-            return IS.Universe
-                .Select(x => IndiscernibilityClass(x))
-                .Where(Ix => X.SubsetEq(Ix))
-                .Aggregate((lowX, Ix) => lowX.Union(Ix));
+            Debug.WriteLine("Standard AS Lower Approximation");
+
+            return IndiscernibilityClasses()
+                .Where(X.SubsetEq)
+                .Aggregate(
+                    Enumerable.Empty<double?[]>(),
+                    (lowX, Ix) => lowX.Union(Ix))
+                ;
         }
 
         public override IEnumerable<double?[]> UpperApproximation(IEnumerable<double?[]> X)
         {
-            return IS.Universe
-                .Select(x => IndiscernibilityClass(x))
+            Debug.WriteLine("Standard AS Upper Approximation");
+
+            return IndiscernibilityClasses()
                 .Where(Ix => X.Intersect(Ix).Any())
-                .Aggregate((upX, Ix) => upX.Union(Ix));
+                .Aggregate(
+                    Enumerable.Empty<double?[]>(),
+                    (upX, Ix) => upX.Union(Ix))
+                ;
         }
 
         /// <summary>
@@ -51,17 +61,25 @@ namespace MUIT2013.DataMining
         /// <returns>Lower Approximation of $X$</returns>
         public override IEnumerable<double?[]> LowerApproximation(Func<double?[], bool> fX)
         {
-            return IS.Universe
-                .Select(x => IndiscernibilityClass(x))
-                .Where(Ix => Ix.All(x => fX(x)))
-                .Aggregate((lowX, Ix) => lowX.Union(Ix));
+            Debug.WriteLine("Standard AS Lower Approximation");
+
+            return IndiscernibilityClasses()
+                .Where(Ix => Ix.All(fX))
+                .Aggregate(
+                    Enumerable.Empty<double?[]>(),
+                    (lowX, Ix) => lowX.Union(Ix))
+                ;
         }
         public override IEnumerable<double?[]> UpperApproximation(Func<double?[], bool> fX)
         {
-            return IS.Universe
-                .Select(x => IndiscernibilityClass(x))
-                .Where(Ix => Ix.Any(x => fX(x)))
-                .Aggregate((upX, Ix) => upX.Union(Ix));
+            Debug.WriteLine("Standard AS Upper Approximation");
+
+            return IndiscernibilityClasses()
+                .Where(Ix => Ix.Any(fX))
+                .Aggregate(
+                    Enumerable.Empty<double?[]>(),
+                    (upX, Ix) => upX.Union(Ix))
+            ;
         }
     }
 }
