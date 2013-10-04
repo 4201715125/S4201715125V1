@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
+
 
 namespace MUIT2013.DataMining
 {
@@ -12,49 +14,48 @@ namespace MUIT2013.DataMining
             : base(_deciSystem)
         { }
 
-        public IEnumerable<int> LastResult
-        {
-            get {
-                return this.results.FindLast(s => true);
-            }
-        }
-
-        public IEnumerable<int> FindNewResult()
-        {
-            this.Process();
-            return this.LastResult;
-        }
-        
         /// <summary>
         /// implementation of QuickReduct algorithm 
         /// </summary>
-        protected void Process()
+        protected override void Process()
         {
             // dependency degree of all attributes
-            HashSet<int> attrs = new HashSet<int>(this.DS.ConditionAttributes);
-            float deDegreeAll = this.ValuateAttrs(attrs);
-            HashSet<int> newReduct = new HashSet<int>();
-            float deDegreeReduct = 0;
-            foreach (int attr in attrs) {
-                if(deDegreeReduct == deDegreeAll) break;
-
-                HashSet<int> X = new HashSet<int>(newReduct);
-                X.Add(attr);
-                Console.WriteLine("Test attr: " + string.Join(",", X));
-                float deDegreeX = this.ValuateAttrs(X);
-                if (deDegreeReduct < deDegreeX)
+            int[] attrs = this.DS.ConditionAttributes;
+            float degreeAll = this.ValuateAttrs(attrs);
+            HashSet<int> X, newReduct;
+            float degreeX, degreeReduct;
+            int tryTimes = 0;
+            while ((++tryTimes) > 0) // infinite loop
+            {
+                newReduct = new HashSet<int>();
+                degreeReduct = 0;
+                foreach (int attr in attrs.Shuffle())
                 {
-                    newReduct = X;
-                    deDegreeReduct = deDegreeX;
+                    if (degreeReduct == degreeAll) break;
+                    X = new HashSet<int>(newReduct);
+                    X.Add(attr);
+                    degreeX = this.ValuateAttrs(X);
+                    if (degreeReduct < degreeX)
+                    {
+                        newReduct = X;
+                        degreeReduct = degreeX;
+                    }
                 }
+                if (newReduct.Count != 0 && newReduct.Count != attrs.Length && 
+                    !this.Results.Exists(x => x.SetEquals(newReduct)))
+                {
+                    this.Results.Add(newReduct);
+                    tryTimes = 0;
+                }
+                
+                if (tryTimes > 50) break; // exit condition
+                //Thread.Sleep(50);
             }
-            if(newReduct.Count != 0)
-                this.results.Add(newReduct);
         }
 
         // This function could be overried in child classes of other
         //   algorithms for finding reducts
-        protected float ValuateAttrs(IEnumerable<int> targetAttrs)
+        protected virtual float ValuateAttrs(IEnumerable<int> targetAttrs)
         {
             return this.CalcDependencyDegree(targetAttrs);
         }

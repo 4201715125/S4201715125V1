@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MUIT2013.DataMining;
+using System.Threading;
 
 namespace MUIT2013.Tests
 {
@@ -38,13 +39,26 @@ namespace MUIT2013.Tests
                     new double[]{ 0, 1, 2 },
                 },
             };
-            
-            // Run the algorithm
-            QuickReductProcessor processor = new QuickReductProcessor(infSys);
-            var rs = processor.FindNewResult();
 
+            Console.WriteLine("Running...");
+            QuickReductProcessor processor = new QuickReductProcessor(infSys);
+            
             // Show results
-            Console.WriteLine("results: " + string.Join(", ", rs));
+            Console.WriteLine("\nAll reducts: ");
+            for(int i = 0; i < processor.Results.Count; i++ ) { 
+                var rs = processor.Results[i];
+                Console.WriteLine((i+1).ToString() + ". {" + string.Join(",", rs.OrderBy(x => x) ) + "}");
+            }
+
+            Console.WriteLine("\nMinimal reducts: ");
+            var miRd = processor.MinimalReducts.ToArray();
+            for (int i = 0; i < miRd.Length; i++)
+            {
+                var rs = miRd[i];
+                Console.WriteLine((i + 1).ToString() + ". {" + string.Join(",", rs.OrderBy(x => x)) + "}");
+            }
+
+            Console.WriteLine("\nCore attributes: " + string.Join(",", processor.CoreAttrs));
 
             // Keep the console open in debug mode.
             Console.WriteLine(System.Environment.NewLine);
