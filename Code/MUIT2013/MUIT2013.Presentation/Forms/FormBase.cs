@@ -16,8 +16,7 @@ namespace MUIT2013.Presentation.Forms
     {
         protected ProjectService projectService;
         protected DataService dataService;
-        protected DataFileService dataFileService;
-        protected ColumnDefinitionService columnDefinitionService;
+        protected DataFileService dataFileService;        
         protected static DataFile ActivateDataFile;
         public FormBase()
         {            
