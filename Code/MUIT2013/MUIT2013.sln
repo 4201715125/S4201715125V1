@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MUIT2013.DataMining", "MUIT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MUIT2013.DataMining.Reducts", "MUIT2013.DataMining.Reducts\MUIT2013.DataMining.Reducts.csproj", "{1401B9E9-064D-43A3-AFDC-2D1F2109B337}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MUIT2013.DataMining.DecisionPartition", "MUIT2013.DataMining.DecisionPartition\MUIT2013.DataMining.DecisionPartition.csproj", "{56A5B38C-BD69-4E90-8B7C-6A4F1826D7BC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{1401B9E9-064D-43A3-AFDC-2D1F2109B337}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1401B9E9-064D-43A3-AFDC-2D1F2109B337}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1401B9E9-064D-43A3-AFDC-2D1F2109B337}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56A5B38C-BD69-4E90-8B7C-6A4F1826D7BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56A5B38C-BD69-4E90-8B7C-6A4F1826D7BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56A5B38C-BD69-4E90-8B7C-6A4F1826D7BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56A5B38C-BD69-4E90-8B7C-6A4F1826D7BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

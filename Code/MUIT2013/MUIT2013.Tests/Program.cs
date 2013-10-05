@@ -14,8 +14,9 @@ namespace MUIT2013.Tests
         public static void Main(string[] args)
         {
             //ASTest.TestAprroximationSpace();
-            ReductTest.TestReduct();
+            //ReductTest.TestReduct();
             //Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
+            DPTest.RunTest();
         }
     }
 }
