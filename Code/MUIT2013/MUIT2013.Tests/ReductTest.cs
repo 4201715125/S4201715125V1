@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MUIT2013.DataMining;
+using MUIT2013.DataMining.Reducts;
 using System.Threading;
 
 namespace MUIT2013.Tests

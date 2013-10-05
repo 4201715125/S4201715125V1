@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MUIT2013.DataMining
+namespace MUIT2013.DataMining.Reducts
 {   
     public class ReductProcessor
     {
@@ -25,10 +25,10 @@ namespace MUIT2013.DataMining
         protected virtual void Process(){}
 
         private IEnumerable<int> GetCoreAttrs() {
-            HashSet<int> core = new HashSet<int>();
-            foreach (var x in this.MinimalReducts)
-                core.IntersectWith(x);
-            return core;
+            if(this.MinimalReducts.Any())
+                return this.MinimalReducts.Aggregate<IEnumerable<int>>((Ix, x) => Ix.Intersect(x));
+            else
+                return Enumerable.Empty<int>();
         }
 
         private IEnumerable<HashSet<int>> GetMinimalReducts()

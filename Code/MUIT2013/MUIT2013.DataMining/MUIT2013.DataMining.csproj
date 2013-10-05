@@ -77,8 +77,6 @@
     <Compile Include="DecisionSystem.cs" />
     <Compile Include="IndiscernibilityRelation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QuickReductProcessor.cs" />
-    <Compile Include="ReductProcessor.cs" />
     <Compile Include="RoughInclusion.cs" />
     <Compile Include="SetUtils.cs" />
     <Compile Include="StandardApproximationSpace.cs" />
