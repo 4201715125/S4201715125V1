@@ -50,7 +50,7 @@ namespace MUIT2013.DataMining.DecisionPartition
                 var j = new Johnson(r);
                 foreach (var val in j.DNF)
                 {
-                    if(isContainedPrimeImplicant(val)) continue;
+                    if (isContainedPrimeImplicant(val)) continue;
                     primeImplicants.Add(val);
                 }
             }
