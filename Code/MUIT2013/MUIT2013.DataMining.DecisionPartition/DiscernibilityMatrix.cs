@@ -9,6 +9,7 @@ namespace MUIT2013.DataMining.DecisionPartition
         //Mảng 3 chiều: 
         public List<List<List<pairID>>> Matrix { get; private set; }
         public List<List<pairID>> primeImplicants { get; private set; }
+
         public DiscernibilityMatrix(DecisionSystem DS, double ruleValue)
         {
             RuleValue = ruleValue;
@@ -29,7 +30,7 @@ namespace MUIT2013.DataMining.DecisionPartition
                     var dataInstances = new List<pairID>();
                     foreach (var header in DS.ConditionAttributes)
                     {
-                        if(row[header]!=column[header])
+                        if (row[header] != column[header])
                         {
                             //var instance = new Instance();
                             //instance.Header=new Header {Id = header.Id, Name = header.Name, Unit = header.Unit};
@@ -42,38 +43,80 @@ namespace MUIT2013.DataMining.DecisionPartition
                 Matrix.Add(dataRow);
             }
         }
+
         public void generateRules()
         {
-            primeImplicants=new List<List<pairID>>();
-            foreach(var r in Matrix)
+            primeImplicants = new List<List<pairID>>();
+            foreach (var r in Matrix)
             {
+
                 var j = new Johnson(r);
                 foreach (var val in j.DNF)
                 {
-                    if (isContainedPrimeImplicant(val)) continue;
-                    primeImplicants.Add(val);
-                }
-            }
-        }
-        //Kiểm tra để loại bỏ các Implicants dư thừa
-        private bool isContainedPrimeImplicant(List<pairID> val)
-        {
-            foreach (var primeImplicant in primeImplicants)
-            {
-                if(val.Count==primeImplicant.Count)
-                {
-                    var n = 0;
-                    for (int i = 0; i < primeImplicant.Count; i++)
+                    //primeImplicants.Add(val);
+                    var n = IsContainedPrimeImplicant(val);
+                    switch (n)
                     {
-                        if (primeImplicant[i].IsContained(val))
-                            n++;
+                        case -1: primeImplicants.Add(val);
+                            break;
+                        case -2:
+                            break;
+                        default:
+                            primeImplicants[n] = val;
+                            break;
                     }
-                    if(n==primeImplicant.Count)
-                        return true;
+
                 }
-                
+                // primeImplicants=primeImplicants.OrderBy(x => x.Count).ToList();
             }
-            return false;
+
+        }
+
+
+        //Kiểm tra để loại bỏ các Implicants dư thừa
+        //-1: add
+        //-2: exist (do nothing)
+        //n: replace current prime implicant at index n
+        private int IsContainedPrimeImplicant(List<pairID> val)
+        {
+            for (var index = 0; index < primeImplicants.Count; index++)
+            {
+                var primeImplicant = primeImplicants[index];
+                //chỉ xem xét các primeImplicant có nhiều phần tử
+                if (primeImplicant.Count < val.Count) continue;
+                var n = 0;//số lượng prime Implicants trùng nhau
+                for (var i = 0; i < primeImplicant.Count; i++)
+                {
+                    for (var j = 0; j < val.Count; j++)
+                    {
+                        if (primeImplicant[i].IsEqual(val[j]))
+                        {
+                            n++;
+                            break;
+                        }
+                    }
+                }
+                if (n != 0)
+                {
+                    if (primeImplicant.Count == val.Count)
+                    {
+                        if (n == primeImplicant.Count)
+                        {
+                            //duplicate
+                            return -2;
+                        }
+                    }
+                    else
+                    {
+                        if (val.Count == n)
+                            //replace
+                            return index;
+                    }
+
+                }
+            }
+            //add
+            return -1;
         }
     }
 }

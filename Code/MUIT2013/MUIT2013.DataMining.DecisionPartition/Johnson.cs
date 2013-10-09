@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace MUIT2013.DataMining.DecisionPartition
 {
@@ -109,6 +110,15 @@ namespace MUIT2013.DataMining.DecisionPartition
             }
             //chuyển tranfer dạng AND<OR> thành DNF dạng OR<AND>
             DNF = retrieve(0, tranfer);
+            SortDNF();
+        }
+        private void SortDNF()
+        {
+            for (var i = 0; i < DNF.Count; i++)
+            {
+                DNF[i] = DNF[i].OrderBy(x => x.AID).ToList();
+            }
+            //DNF = DNF.OrderBy(x => x.Count).ToList();
         }
         private List<List<pairID>> retrieve(int id,List<List<pairID>> tranfer)
         {
