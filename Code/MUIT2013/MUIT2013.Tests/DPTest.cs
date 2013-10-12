@@ -27,7 +27,6 @@ namespace MUIT2013.Tests
                             new double?[] {6, 2, 0, 0, 1, 0},
                             new double?[] {7, 0, 0, 1, 0, 1},
                             new double?[] {8, 2, 1, 1, 0, 1}
-
                         },
                     ConditionAttributes = new[] {1,2, 3, 4},
                     DecisionAttributes = new[] {5},
@@ -49,7 +48,7 @@ namespace MUIT2013.Tests
             {
                 Console.WriteLine("Attribute: "+discernibilityMatrix.RuleValue);
                 Console.WriteLine("Prime Impicants:");
-                foreach (var primeImplicant in discernibilityMatrix.primeImplicants)
+                foreach (var primeImplicant in discernibilityMatrix.PrimeImplicants)
                 {
                     foreach (var pairId in primeImplicant)
                     {
