@@ -13,7 +13,7 @@ namespace MUIT2013.DataMining.DecisionPartition
             foreach (var d in data)
             {
                 var m = new DiscernibilityMatrix(DS, d);
-                m.generateRules();
+                m.GenerateRules();
                 DiscernMatrix.Add(m);
             }
         }

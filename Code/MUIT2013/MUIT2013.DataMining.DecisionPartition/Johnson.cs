@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace MUIT2013.DataMining.DecisionPartition
 {
@@ -8,7 +9,7 @@ namespace MUIT2013.DataMining.DecisionPartition
         //CNF: AND<OR>
         //DNF: OR<AND>
         //tranfer: AND<OR>
-        public Johnson(List<List<pairID>> CNF)
+        public Johnson(IList<List<pairID>> CNF)
         {
             var list = new List<pairID>();
             var count = new List<int>();
@@ -109,8 +110,17 @@ namespace MUIT2013.DataMining.DecisionPartition
             }
             //chuyển tranfer dạng AND<OR> thành DNF dạng OR<AND>
             DNF = retrieve(0, tranfer);
+            SortDNF();
         }
-        private List<List<pairID>> retrieve(int id,List<List<pairID>> tranfer)
+        private void SortDNF()
+        {
+            for (var i = 0; i < DNF.Count; i++)
+            {
+                DNF[i] = DNF[i].OrderBy(x => x.AID).ToList();
+            }
+            //DNF = DNF.OrderBy(x => x.Count).ToList();
+        }
+        private List<List<pairID>> retrieve(int id,IReadOnlyList<List<pairID>> tranfer)
         {
             var fulllist = new List<List<pairID>>();
             if (id == tranfer.Count)
@@ -120,13 +130,13 @@ namespace MUIT2013.DataMining.DecisionPartition
                 var rs = retrieve(id + 1, tranfer);
                 if(rs.Count==0)
                 {
-                    var temp = new List<pairID>() { tranfer[id][i] };
+                    var temp = new List<pairID> { tranfer[id][i] };
                     fulllist.Add(temp);
                     continue;
                 }
                 foreach (var r in rs)
                 {
-                    var temp = new List<pairID>() { tranfer[id][i] };
+                    var temp = new List<pairID> { tranfer[id][i] };
                     temp.AddRange(r);
                     fulllist.Add(temp);
                 }
