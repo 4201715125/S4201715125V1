@@ -24,7 +24,7 @@ namespace MUIT2013.DataMining.Reducts
             HashSet<int> X, newReduct;
             float degreeX, degreeReduct;
             int tryTimes = 0;
-            while ((++tryTimes) > 0) // infinite loop
+            while ((++tryTimes) <= 50) // infinite loop
             {
                 newReduct = new HashSet<int>();
                 degreeReduct = 0;
@@ -40,6 +40,7 @@ namespace MUIT2013.DataMining.Reducts
                         degreeReduct = degreeX;
                     }
                 }
+
                 if (newReduct.Count != 0 && newReduct.Count != attrs.Length && 
                     !this.Results.Exists(x => x.SetEquals(newReduct)))
                 {
@@ -47,7 +48,6 @@ namespace MUIT2013.DataMining.Reducts
                     tryTimes = 0;
                 }
                 
-                if (tryTimes > 50) break; // exit condition
                 //Thread.Sleep(50);
             }
         }
