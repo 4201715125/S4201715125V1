@@ -18,5 +18,12 @@ namespace MUIT2013.DataMining
         public int ObjectCount {
             get { return this.Universe.Length; }
         }
+
+        public Double CalcInConsistencyRate()
+        {
+            
+            //TODO
+            return 0.1;
+        }
     }
 }

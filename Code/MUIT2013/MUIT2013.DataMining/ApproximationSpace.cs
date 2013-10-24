@@ -109,6 +109,30 @@ namespace MUIT2013.DataMining
                 .Aggregate((X, Y) => X.Union(Y))
                 ;
         }
+
+        public static IEnumerable<double?> GetAllDecisionClasses(IEnumerable<double?[]> objects, 
+            int decisionAttrIndex) 
+        {
+            return objects.Select(x => x[decisionAttrIndex]).Distinct();
+        }
+
+        protected Double inConsistencyRate;
+        public virtual Double InConsistencyRate() {
+            if (inConsistencyRate == null)
+            {
+                var inConClasses = IndiscernibilityClasses()
+                    .Where(X => GetAllDecisionClasses(X, IS.DecisionAttribute).Count() > 1);
+
+                var inConObjs = inConClasses
+                    .Aggregate(
+                        Enumerable.Empty<double?[]>(),
+                        (U, X) => U.Union(X));
+                
+                int inConsistentCount = inConObjs.Distinct().Count();
+                inConsistencyRate = (double)inConsistentCount / this.IS.ObjectCount;
+            }
+            return inConsistencyRate;
+        }
         #endregion
     }
 }

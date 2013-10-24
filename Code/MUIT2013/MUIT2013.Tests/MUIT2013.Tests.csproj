@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ASTest.cs" />
+    <Compile Include="Chi2Test.cs" />
     <Compile Include="DPTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -79,6 +80,10 @@
     <ProjectReference Include="..\MUIT2013.Business\MUIT2013.Business.csproj">
       <Project>{28c14487-863f-48af-9179-e191a9c06a87}</Project>
       <Name>MUIT2013.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MUIT2013.DataMining.Chi2\MUIT2013.DataMining.Chi2.csproj">
+      <Project>{48447ce3-331c-416e-bca4-2830b73b8c71}</Project>
+      <Name>MUIT2013.DataMining.Chi2</Name>
     </ProjectReference>
     <ProjectReference Include="..\MUIT2013.DataMining.DecisionPartition\MUIT2013.DataMining.DecisionPartition.csproj">
       <Project>{56a5b38c-bd69-4e90-8b7c-6a4f1826d7bc}</Project>
