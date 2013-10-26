@@ -17,7 +17,7 @@ namespace MUIT2013.DataMining.DecisionPartition
             var columns = sa.LowerApproximation(RuleValue);
             //so sánh với các phần tử không thuộc lower approximation
             var rows =
-                DS.Universe.Where(p => columns.All(p2 => p2[0] != p[0])).Where(p => p[DS.DecisionAttribute] != RuleValue);
+                DS.Universe.Where(p => columns.All(p2 => p2[0] != p[0])).Where(p => p[DS.DecisionAttributes[0]] != RuleValue);
             Matrix = new List<List<List<pairID>>>();
             foreach (var column in columns)
             {
@@ -27,13 +27,16 @@ namespace MUIT2013.DataMining.DecisionPartition
                     var dataInstances = new List<pairID>();
                     foreach (var header in DS.ConditionAttributes)
                     {
+                        if(header==1) continue;
                         if (row[header] != column[header])
                         {
-                            dataInstances.Add(new pairID(header, double.Parse(column[header].ToString())));
+                            dataInstances.Add(new pairID(header, int.Parse(column[header].ToString())));
                         }
                     }
-                    dataRow.Add(dataInstances);
+                    if(dataInstances.Count!=0)
+                        dataRow.Add(dataInstances);
                 }
+                if(dataRow.Count!=0)
                 Matrix.Add(dataRow);
             }
         }
@@ -43,6 +46,7 @@ namespace MUIT2013.DataMining.DecisionPartition
             PrimeImplicants = new List<List<pairID>>();
             foreach (var r in Matrix)
             {
+                if(r.Count==0) continue;
                 var j = new Johnson(r);
                 foreach (var val in j.DNF)
                 {

@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MUIT2013.DataMining.Reducts
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MUIT2013.DataMining.DecisionPartition", "MUIT2013.DataMining.DecisionPartition\MUIT2013.DataMining.DecisionPartition.csproj", "{56A5B38C-BD69-4E90-8B7C-6A4F1826D7BC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MUIT2013.DataMining.Discretization", "MUIT2013.DataMining.Discretization\MUIT2013.DataMining.Discretization.csproj", "{6D508D7C-89F6-4665-9FE1-146470660EA5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{56A5B38C-BD69-4E90-8B7C-6A4F1826D7BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56A5B38C-BD69-4E90-8B7C-6A4F1826D7BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56A5B38C-BD69-4E90-8B7C-6A4F1826D7BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D508D7C-89F6-4665-9FE1-146470660EA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D508D7C-89F6-4665-9FE1-146470660EA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D508D7C-89F6-4665-9FE1-146470660EA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D508D7C-89F6-4665-9FE1-146470660EA5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

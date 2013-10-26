@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ASTest.cs" />
+    <Compile Include="MDTest.cs" />
     <Compile Include="DPTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -83,6 +84,10 @@
     <ProjectReference Include="..\MUIT2013.DataMining.DecisionPartition\MUIT2013.DataMining.DecisionPartition.csproj">
       <Project>{56a5b38c-bd69-4e90-8b7c-6a4f1826d7bc}</Project>
       <Name>MUIT2013.DataMining.DecisionPartition</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MUIT2013.DataMining.Discretization\MUIT2013.DataMining.Discretization.csproj">
+      <Project>{6d508d7c-89f6-4665-9fe1-146470660ea5}</Project>
+      <Name>MUIT2013.DataMining.Discretization</Name>
     </ProjectReference>
     <ProjectReference Include="..\MUIT2013.DataMining.Reducts\MUIT2013.DataMining.Reducts.csproj">
       <Project>{1401b9e9-064d-43a3-afdc-2d1f2109b337}</Project>
