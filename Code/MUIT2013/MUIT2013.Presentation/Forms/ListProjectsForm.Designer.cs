@@ -70,7 +70,7 @@
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.lsbProject);
             this.Name = "ListProjectsForm";
-            this.Text = "ListProjectsForm";
+            this.Text = "Projects";
             this.Load += new System.EventHandler(this.ListProjectsForm_Load);
             this.ResumeLayout(false);
 

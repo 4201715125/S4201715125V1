@@ -65,7 +65,9 @@
   <ItemGroup>
     <Compile Include="AttributeDefinitionService.cs" />
     <Compile Include="DataMiningService.cs" />
-    <Compile Include="HandlerTrackerService.cs" />
+    <Compile Include="DecisionTableHistoryService.cs" />
+    <Compile Include="DecisionTableService.cs" />
+    <Compile Include="Digitizer.cs" />
     <Compile Include="ServiceBase.cs" />
     <Compile Include="DataFileService.cs" />
     <Compile Include="DataService.cs" />
@@ -73,6 +75,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MUIT2013.DataMining.DecisionPartition\MUIT2013.DataMining.DecisionPartition.csproj">
+      <Project>{56a5b38c-bd69-4e90-8b7c-6a4f1826d7bc}</Project>
+      <Name>MUIT2013.DataMining.DecisionPartition</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MUIT2013.DataMining.Reducts\MUIT2013.DataMining.Reducts.csproj">
+      <Project>{1401b9e9-064d-43a3-afdc-2d1f2109b337}</Project>
+      <Name>MUIT2013.DataMining.Reducts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MUIT2013.DataMining\MUIT2013.DataMining.csproj">
       <Project>{f564fffe-a84d-4d65-b054-a3091f572c61}</Project>
       <Name>MUIT2013.DataMining</Name>

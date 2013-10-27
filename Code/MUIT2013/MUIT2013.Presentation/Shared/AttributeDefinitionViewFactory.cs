@@ -14,12 +14,12 @@ namespace MUIT2013.Presentation.Shared
         private Dictionary<KeyValuePair<long, string>, AttributeDefinitionView> container = new Dictionary<KeyValuePair<long,string>,AttributeDefinitionView>();
         public  AttributeDefinitionView Create(AttributeDefinition AttributeDefinition)
         {
-            var cacheKey = new KeyValuePair<long, string>(AttributeDefinition.Id, AttributeDefinition.ColumnType);
+            var cacheKey = new KeyValuePair<long, string>(AttributeDefinition.Id, AttributeDefinition.AttributeDataType);
             AttributeDefinitionView cache = null; ;
             if (container.ContainsKey(cacheKey)) cache = container[cacheKey];
             else
             {
-                if (AttributeDefinition.ColumnType == "String")
+                if (AttributeDefinition.AttributeDataType == "String")
                 {
                     StringRuleAttributeDefinitionView srcdv = new StringRuleAttributeDefinitionView(AttributeDefinition);
                     StringRuleFactory factory = new StringRuleFactory();
@@ -30,7 +30,7 @@ namespace MUIT2013.Presentation.Shared
                     cache = container[cacheKey] = srcdv;
                     
                 }
-                else if (AttributeDefinition.ColumnType == "Numeric")
+                else if (AttributeDefinition.AttributeDataType == "Numeric")
                 {                    
                     NumericRuleAttributeDefinitionView srcdv = new NumericRuleAttributeDefinitionView(AttributeDefinition);
                     NumericRuleFactory factory = new NumericRuleFactory();

@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace MUIT2013.Data.Models
 {
-    public class HandlerTracker
+    public class Attribute
     {
         public long Id { get; set; }
-        public string PreviousTableName { get; set; }
-        public string TableName { get; set; }
-        public string Content { get; set; }
+        public long DecisionTableId { get; set; }
+        public int AttributeIndex { get; set; }
+        public string AttributeType { get; set; }
         public string CreatedDate { get; set; }
     }
 }

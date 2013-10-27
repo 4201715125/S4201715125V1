@@ -1,5 +1,7 @@
 ﻿using MUIT2013.Business;
+using MUIT2013.Data.Enums;
 using MUIT2013.Data.Models;
+using MUIT2013.Data.ViewModels;
 using MUIT2013.Presentation.Forms;
 using System;
 using System.Collections.Generic;
@@ -71,26 +73,86 @@ namespace MUIT2013.Presentation
             configurationToolStripMenuItem.Enabled = IsActivated;
             importToolStripMenuItem.Enabled = IsActivated;
             exportToolStripMenuItem.Enabled = IsActivated;
+            handlersToolStripMenuItem.Enabled = IsActivated;
         }
         #endregion
 
         private void approximationsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = new HandlerTrackerForm();
+            var decisionTableHistoryService = new DecisionTableHistoryService();
+            var dtHistoryViews = decisionTableHistoryService.GetList(p => p.Action == EDTHistoryAction.QuickReduct);
+            var form = new DecisionTableHistoryForm(dtHistoryViews);
             form.MdiParent = this;
-
-            form.SelectHandlerTracker += form_SelectHandlerTracker;
+            form.SelectDecisionTableHistory += formApproximation_SelectHandlerTracker;
             form.Show();
         }
 
-        void form_SelectHandlerTracker(object sender, EventArgs e)
+        void formApproximation_SelectHandlerTracker(object sender, EventArgs e)
         {
-            var handlerTracker = (HandlerTracker)sender;
+            var decisionTableHistoryView = (DecisionTableHistoryView)sender;
+            DataMiningService service = new DataMiningService();
+            DataFileService dataFileService = new DataFileService();
+            AttributeDefinitionService attributeDefinitionService = new AttributeDefinitionService();                        
+            
+            var activateDataFile = dataFileService.GetActivedDataFile();            
+            var attributeDefs = attributeDefinitionService.GetList(activateDataFile.Id);
+
+            service.Approximation(attributeDefs, decisionTableHistoryView.Id);
+            MessageBox.Show("Run Approximation successfully", "Approximation");
+            //var quickReductResult = service.QuickReduct(attributeDefs, decisionTableHistoryView.Id);
+            //var dtHistory = quickReductResult.Item1;
+            //var reducts = quickReductResult.Item2;
+            //var form = new QuickReductResultForm(dtHistory, reducts);
+            //form.MdiParent = this;
+            //form.Show();
+        }
+
+        #region Quick Reduct
+        private void quickReductsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var decisionTableHistoryService = new DecisionTableHistoryService();
+            var dtHistoryViews = decisionTableHistoryService.GetList(p => p.Action == EDTHistoryAction.CreateMapTable);
+            var form = new DecisionTableHistoryForm(dtHistoryViews);
+            form.MdiParent = this;
+
+            form.SelectDecisionTableHistory += formQuickReduct_SelectHandlerTracker;
+            form.Show();
+        }
+
+        void formQuickReduct_SelectHandlerTracker(object sender, EventArgs e)
+        {
+            var decisionTableHistoryView = (DecisionTableHistoryView)sender;
             DataMiningService service = new DataMiningService();
             DataFileService dataFileService = new DataFileService();
             AttributeDefinitionService attributeDefinitionService = new AttributeDefinitionService();
-            var attributeDefinitions = attributeDefinitionService.GetList(dataFileService.GetActivedDataFile().Id);
-            service.GetDecisionSystem(attributeDefinitions, handlerTracker.TableName);
+
+            var activateDataFile = dataFileService.GetActivedDataFile();
+            var attributeDefs = attributeDefinitionService.GetList(activateDataFile.Id);
+            var quickReductResult = service.QuickReduct(attributeDefs, decisionTableHistoryView.Id);
+            var dtHistory = quickReductResult.Item1;
+            var reducts = quickReductResult.Item2;
+            var form = new QuickReductResultForm(dtHistory, reducts);
+            form.MdiParent = this;
+            form.Show();            
+        }
+        #endregion
+
+        private void reductToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var decisionTableHistoryService = new DecisionTableHistoryService();
+            var dtHistoryViews = decisionTableHistoryService.GetList(p => p.Action == EDTHistoryAction.QuickReduct);
+            var form = new DecisionTableHistoryForm(dtHistoryViews);
+            form.MdiParent = this;            
+            form.Show();
+        }
+
+        private void approximationsToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            var decisionTableHistoryService = new DecisionTableHistoryService();
+            var dtHistoryViews = decisionTableHistoryService.GetList(p => p.Action == EDTHistoryAction.Approximation);
+            var form = new DecisionTableHistoryForm(dtHistoryViews);
+            form.MdiParent = this;
+            form.Show();
         }
     }
 }

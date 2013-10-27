@@ -83,11 +83,17 @@
     <Compile Include="Forms\NoRuleForm.Designer.cs">
       <DependentUpon>NoRuleForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\HandlerTrackerForm.cs">
+    <Compile Include="Forms\DecisionTableHistoryForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\HandlerTrackerForm.Designer.cs">
-      <DependentUpon>HandlerTrackerForm.cs</DependentUpon>
+    <Compile Include="Forms\DecisionTableHistoryForm.Designer.cs">
+      <DependentUpon>DecisionTableHistoryForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\QuickReductResultForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\QuickReductResultForm.Designer.cs">
+      <DependentUpon>QuickReductResultForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ViewDataForm.cs">
       <SubType>Form</SubType>
@@ -102,7 +108,7 @@
     <Compile Include="Shared\DataFileViewFactory.cs" />
     <Compile Include="Shared\Editor\NumericRuleEditor.cs" />
     <Compile Include="Shared\Editor\StringRuleEditor.cs" />
-    <Compile Include="Shared\Events\HandlerTrackerEvent.cs" />
+    <Compile Include="Shared\Events\DecisionTableEvent.cs" />
     <Compile Include="Shared\ViewData\AttributeDefinitionView.cs" />
     <Compile Include="Forms\ConfigurationForm.cs">
       <SubType>Form</SubType>
@@ -165,8 +171,11 @@
     <EmbeddedResource Include="Forms\NoRuleForm.resx">
       <DependentUpon>NoRuleForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\HandlerTrackerForm.resx">
-      <DependentUpon>HandlerTrackerForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\DecisionTableHistoryForm.resx">
+      <DependentUpon>DecisionTableHistoryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\QuickReductResultForm.resx">
+      <DependentUpon>QuickReductResultForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ViewDataForm.resx">
       <DependentUpon>ViewDataForm.cs</DependentUpon>

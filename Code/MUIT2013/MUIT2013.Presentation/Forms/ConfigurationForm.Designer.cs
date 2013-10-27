@@ -44,7 +44,12 @@
             this.gvAttributeProperties = new System.Windows.Forms.GroupBox();
             this.pgAttributeDefinition = new System.Windows.Forms.PropertyGrid();
             this.cbColumnType = new System.Windows.Forms.ComboBox();
+            this.txtProjectDescription = new System.Windows.Forms.RichTextBox();
+            this.lblProjectDescription = new System.Windows.Forms.Label();
+            this.lblProjectName = new System.Windows.Forms.Label();
+            this.txtProjectName = new System.Windows.Forms.TextBox();
             this.tabControl.SuspendLayout();
+            this.tpProjectInfo.SuspendLayout();
             this.tpProjectConfig.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAttributeDefinition)).BeginInit();
             this.gbToolBar.SuspendLayout();
@@ -64,6 +69,10 @@
             // 
             // tpProjectInfo
             // 
+            this.tpProjectInfo.Controls.Add(this.txtProjectDescription);
+            this.tpProjectInfo.Controls.Add(this.lblProjectDescription);
+            this.tpProjectInfo.Controls.Add(this.txtProjectName);
+            this.tpProjectInfo.Controls.Add(this.lblProjectName);
             this.tpProjectInfo.Location = new System.Drawing.Point(4, 22);
             this.tpProjectInfo.Name = "tpProjectInfo";
             this.tpProjectInfo.Padding = new System.Windows.Forms.Padding(3);
@@ -221,6 +230,41 @@
             this.cbColumnType.TabIndex = 2;
             this.cbColumnType.SelectedValueChanged += new System.EventHandler(this.cbColumnType_SelectedValueChanged);
             // 
+            // txtProjectDescription
+            // 
+            this.txtProjectDescription.Location = new System.Drawing.Point(286, 144);
+            this.txtProjectDescription.Name = "txtProjectDescription";
+            this.txtProjectDescription.ReadOnly = true;
+            this.txtProjectDescription.Size = new System.Drawing.Size(240, 86);
+            this.txtProjectDescription.TabIndex = 16;
+            this.txtProjectDescription.Text = "";
+            // 
+            // lblProjectDescription
+            // 
+            this.lblProjectDescription.AutoSize = true;
+            this.lblProjectDescription.Location = new System.Drawing.Point(157, 144);
+            this.lblProjectDescription.Name = "lblProjectDescription";
+            this.lblProjectDescription.Size = new System.Drawing.Size(96, 13);
+            this.lblProjectDescription.TabIndex = 15;
+            this.lblProjectDescription.Text = "Project Description";
+            // 
+            // lblProjectName
+            // 
+            this.lblProjectName.AutoSize = true;
+            this.lblProjectName.Location = new System.Drawing.Point(157, 115);
+            this.lblProjectName.Name = "lblProjectName";
+            this.lblProjectName.Size = new System.Drawing.Size(71, 13);
+            this.lblProjectName.TabIndex = 9;
+            this.lblProjectName.Text = "Project Name";
+            // 
+            // txtProjectName
+            // 
+            this.txtProjectName.Location = new System.Drawing.Point(286, 112);
+            this.txtProjectName.Name = "txtProjectName";
+            this.txtProjectName.ReadOnly = true;
+            this.txtProjectName.Size = new System.Drawing.Size(240, 20);
+            this.txtProjectName.TabIndex = 10;
+            // 
             // ConfigurationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -230,9 +274,11 @@
             this.Name = "ConfigurationForm";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "ConfigurationForm";
+            this.Text = "Configuration";
             this.Load += new System.EventHandler(this.ConfigurationForm_Load);
             this.tabControl.ResumeLayout(false);
+            this.tpProjectInfo.ResumeLayout(false);
+            this.tpProjectInfo.PerformLayout();
             this.tpProjectConfig.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvAttributeDefinition)).EndInit();
             this.gbToolBar.ResumeLayout(false);
@@ -259,5 +305,9 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn dgvcIsDecision;
         private System.Windows.Forms.DataGridViewTextBoxColumn dgvcValidationStatus;
         private System.Windows.Forms.DataGridViewButtonColumn dgvcAction;
+        private System.Windows.Forms.RichTextBox txtProjectDescription;
+        private System.Windows.Forms.Label lblProjectDescription;
+        private System.Windows.Forms.TextBox txtProjectName;
+        private System.Windows.Forms.Label lblProjectName;
     }
 }

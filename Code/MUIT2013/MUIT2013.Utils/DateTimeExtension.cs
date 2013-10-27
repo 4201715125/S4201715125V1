@@ -12,5 +12,10 @@ namespace MUIT2013.Utils
         {
             return value.ToString("yyyyMMddHHmmssffff");
         }
+
+        public static string ToNormalDateTimeString(this DateTime value)
+        {
+            return value.ToString("dd/MM/yyyy HH:mm:ss");
+        }
     }
 }

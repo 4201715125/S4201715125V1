@@ -9,6 +9,8 @@ using MUIT2013.Utils;
 using MUIT2013.Data.Models;
 using MUIT2013.DataMining.AttributeRule;
 using MUIT2013.Data.ViewModels;
+using MUIT2013.Data.Enums;
+using System.Data;
 
 namespace MUIT2013.Business
 {
@@ -42,7 +44,7 @@ namespace MUIT2013.Business
                 foreach (var AttributeDefinition in AttributeDefinitions)
                 {
                     string sValue = ((IDictionary<string, object>)row)[AttributeDefinition.Name].ToString();                   
-                    if (AttributeDefinition.ColumnType == "String")
+                    if (AttributeDefinition.AttributeDataType == "String")
                     {
                         if (AttributeDefinition.IsAutoEncoding)
                         {
@@ -79,18 +81,52 @@ namespace MUIT2013.Business
             }
 
             DataRepository.GenerateMapTable(dataFile, AttributeDefinitions, records);
-            HandlerTrackerRepository.Create(new HandlerTracker
-            {
-                PreviousTableName = "",
+            var decisionTableId = DecisionTableRepository.Create(new DecisionTable
+            {                
                 TableName = dataFile.MapTableName,
                 Content = string.Format("Create map table {0} from file {0}", dataFile.Name),
-                CreatedDate = DateTime.Now.ToTimeStamps()
+                CreatedDate = DateTime.Now.ToNormalDateTimeString()
+            });
+            DecisionTableHistoryRepository.Create(new DecisionTableHistory {
+                Action = EDTHistoryAction.CreateMapTable,
+                DecisionTableId = decisionTableId,
+                Decription = "",
+                CreatedDate = DateTime.Now.ToNormalDateTimeString(),
+                ParentId = 0
             });
         }
-
-        public List<dynamic> GetViewData(string tableName)
+        
+        public DataTable GetViewData(string tableName)
         {
-            return DataRepository.GetDataForTable(tableName).ToList();
+            var dataFile = DataFileRepository.GetList().FirstOrDefault(p => p.MapTableName == tableName || p.RawTableName == tableName);            
+            var attributeDefs = AttributeDefinitionRepository.GetList(dataFile.Id);
+            var attributeDefDict = AttributeDefinitionRepository.GetAttributeNameDictionary(attributeDefs);
+            
+            var data = DataRepository.GetDataForTable(tableName).ToList();
+            var records = data.Select(p => (IDictionary<string, object>)p);
+            var dataTable = new DataTable(tableName);            
+            var firstRecord = records.First();
+            foreach (var key in firstRecord.Keys)
+            {
+                if (attributeDefDict.ContainsKey(key))
+                    dataTable.Columns.Add(new DataColumn {
+                        ColumnName = attributeDefDict[key],
+                        Caption = attributeDefDict[key]                        
+                    });
+                else dataTable.Columns.Add(new DataColumn { 
+                    ColumnName = key,
+                    Caption = key,
+                });                
+            }
+
+            foreach (var record in records.Take(50))
+            {                
+                dataTable.Rows.Add(
+                    record.Keys.Select(k => record[k].ToString()).ToArray()
+                );
+            }
+
+            return dataTable;
         }
 
         public bool CheckStringRuleInValidationStatus(DataFile dataFile, AttributeDefinition AttributeDefinition, List<IStringRule> rules)
