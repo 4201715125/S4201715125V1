@@ -42,7 +42,7 @@ namespace MUIT2013.Tests
                         },
                 };
 
-            var r=new Rules(infSys);
+            var r=new Rules(infSys,new int[]{1,2,3,4});
             //Output
             foreach (var discernibilityMatrix in r.DiscernMatrix)
             {

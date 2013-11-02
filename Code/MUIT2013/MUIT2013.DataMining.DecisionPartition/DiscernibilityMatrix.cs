@@ -10,14 +10,14 @@ namespace MUIT2013.DataMining.DecisionPartition
         public List<List<List<pairID>>> Matrix { get; private set; }
         public List<List<pairID>> PrimeImplicants { get; private set; }
 
-        public DiscernibilityMatrix(DecisionSystem DS, double ruleValue)
+        public DiscernibilityMatrix(DecisionSystem ds,IEnumerable<int> reduct, double ruleValue)
         {
-            var sa = new StandardApproximationSpace(DS, DS.ConditionAttributes);
+            var sa = new StandardApproximationSpace(ds, reduct);
             RuleValue = ruleValue;
             var columns = sa.LowerApproximation(RuleValue);
             //so sánh với các phần tử không thuộc lower approximation
             var rows =
-                DS.Universe.Where(p => columns.All(p2 => p2[0] != p[0])).Where(p => p[DS.DecisionAttributes[0]] != RuleValue);
+                ds.Universe.Where(p => columns.All(p2 => p2[0] != p[0])).Where(p => p[ds.DecisionAttributes[0]] != RuleValue);
             Matrix = new List<List<List<pairID>>>();
             foreach (var column in columns)
             {
@@ -25,9 +25,8 @@ namespace MUIT2013.DataMining.DecisionPartition
                 foreach (var row in rows)
                 {
                     var dataInstances = new List<pairID>();
-                    foreach (var header in DS.ConditionAttributes)
+                    foreach (var header in reduct)
                     {
-                        if(header==1) continue;
                         if (row[header] != column[header])
                         {
                             dataInstances.Add(new pairID(header, int.Parse(column[header].ToString())));
