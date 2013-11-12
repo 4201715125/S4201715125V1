@@ -116,9 +116,10 @@ namespace MUIT2013.DataMining
             return objects.Select(x => x[decisionAttrIndex]).Distinct();
         }
 
-        protected Double inConsistencyRate;
+        private Double inConsistencyRate = -1;
+
         public virtual Double InConsistencyRate() {
-            if (inConsistencyRate == null)
+            if (inConsistencyRate == -1)
             {
                 var inConClasses = IndiscernibilityClasses()
                     .Where(X => GetAllDecisionClasses(X, IS.DecisionAttribute).Count() > 1);
@@ -130,6 +131,8 @@ namespace MUIT2013.DataMining
                 
                 int inConsistentCount = inConObjs.Distinct().Count();
                 inConsistencyRate = (double)inConsistentCount / this.IS.ObjectCount;
+                if (inConsistencyRate > 0)
+                    Console.WriteLine();
             }
             return inConsistencyRate;
         }

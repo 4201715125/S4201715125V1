@@ -19,11 +19,25 @@ namespace MUIT2013.DataMining
             get { return this.Universe.Length; }
         }
 
-        public Double CalcInConsistencyRate()
-        {
+        public DecisionSystem(){}
+
+        public DecisionSystem(double?[][] universe, int[] condAttrs, int decisionAttr) {
+            this.Universe = universe;
+            this.ConditionAttributes = condAttrs;
+            this.DecisionAttribute = decisionAttr;
+            this.DecisionAttributes = new int[] { decisionAttr };
             
-            //TODO
-            return 0.1;
+            List<double[]> attrDomains = new List<double[]>();
+            List<int> allAttrs = new List<int>(condAttrs);
+            allAttrs.Add(decisionAttr);
+            foreach (var attr in allAttrs) {
+                var domain = universe
+                        .Where(i => i[attr] != null)
+                        .Select(i => (double)i[attr])
+                        .ToArray();
+                attrDomains.Add(domain);
+            }
+            this.AttributesDomain = attrDomains.ToArray();
         }
     }
 }

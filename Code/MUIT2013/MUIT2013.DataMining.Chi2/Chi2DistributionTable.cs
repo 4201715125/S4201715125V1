@@ -9,14 +9,15 @@ namespace MUIT2013.DataMining.Chi2
 {
     public static class Chi2DistributionTable
     {
-        private static Double[][] Chi2DataTable;
-        private static List<Double> Pvalues;
-        private static List<Double> DFs;
+        private static Double[][] Chi2DataTable = LoadChi2Table();
+        public static List<Double> Pvalues { get; private set; }
+        public static List<Double> DFs { get; private set; }
 
-        private static void LoadChi2Table()
+        private static Double[][] LoadChi2Table()
         {
+            // use Chi2DistributionTable_2 because it has Pvalue 0.5
             string[] lines = MUIT2013.DataMining.Chi2.Properties.Resources
-                .ChiSquareDistributionTable.Split('\n');
+                .Chi2DistributionTable_2.Split('\n');
             List<double[]> table = new List<double[]>();
             DFs = new List<double>();
 
@@ -32,12 +33,10 @@ namespace MUIT2013.DataMining.Chi2
                 DFs.Add(Double.Parse(data[0]));
                 table.Add(data.SubArray(1).Select(x => Double.Parse(x)).ToArray());
             }
-            Chi2DataTable = table.ToArray();
+            return table.ToArray();
         }
 
         public static double GetValueAt(double Pvalue, double DF){
-            if (Chi2DataTable == null)
-                LoadChi2Table();
             int PvalueIdx = Pvalues.IndexOf(Pvalue);
             int dfIdx = DFs.IndexOf(DF);
             return Chi2DataTable[dfIdx][PvalueIdx];

@@ -1,0 +1,2 @@
+- Chi2DistributionTable from http://www.medcalc.org/manual/chi-square-table.php
+- Chi2DistributionTable from http://en.wikipedia.org/wiki/Chi-squared_distribution
