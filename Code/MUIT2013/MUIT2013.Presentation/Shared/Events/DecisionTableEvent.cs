@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace MUIT2013.Presentation.Shared.Events
 {
-    public delegate void SelectHandlerTracker(object sender, EventArgs e);    
+    public delegate void SelectDecisionTableHistory(object sender, EventArgs e);    
 }

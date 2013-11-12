@@ -18,6 +18,8 @@ namespace MUIT2013.Tests
             //Debug.Listeners.Add(new TextWriterTraceListener(Console.Out));
             //DPTest.RunTest();
             Chi2Test.perfom();
+            //DPTest.RunTest();
+            //MDTest.RunTest();
         }
     }
 }

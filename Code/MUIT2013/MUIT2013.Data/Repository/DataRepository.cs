@@ -22,7 +22,7 @@ namespace MUIT2013.Data.Repository
             var dataFile = new DataFile { 
                 RawTableName = string.Format("RawTable{0}",DateTime.Now.ToTimeStamps()),
                 Name = fileName,
-                CreatedDate = DateTime.Now.ToTimeStamps(),
+                CreatedDate = DateTime.Now.ToNormalDateTimeString(),
                 RelativePath = relativeFilePath
             };
             DataFileRepository.Create(dataFile);
@@ -95,7 +95,7 @@ namespace MUIT2013.Data.Repository
                         AttributeDefinitionList.Add(string.Format("{0} VARCHAR(255)", p.Name));
                         
 	                }else{
-                        if (p.ColumnType == "Numeric")
+                        if (p.AttributeDataType == "Numeric")
                         {
                             AttributeDefinitionList.Add(string.Format("{0} REAL", p.Name));
                         }
@@ -200,27 +200,19 @@ namespace MUIT2013.Data.Repository
             }            
         }
 
-        public static void GetDataForDecisionSystem(IEnumerable<AttributeDefinition> attributeDefinitions, string rawTableName, out double?[][] universe, out double[][] attributeDomain, out int[] decisionAttributes, out int[] conditionAttributes, out int idIndex) 
+        public static void GetDataForDecisionSystem(IEnumerable<AttributeDefinition> attributeDefinitions, string rawTableName, out double?[][] universe, out double[][] attributeDomain, out int[] decisionAttributes, out int[] conditionAttributes, ref int idIndex) 
         {
             var da = new List<int>();
-            var ca = new List<int>();
-            idIndex = 0;
+            var ca = new List<int>();            
             foreach (var ad in attributeDefinitions)
             {                
                 if (ad.IsDecision)
                 {
-                    da.Add(ad.AttributeIndex);
+                    da.Add(ad.AttributeIndex + 1);
                 }
                 else
-                {
-                    if (ad.IsIdentifier)
-                    {
-                        idIndex = ad.AttributeIndex;
-                    }
-                    else
-                    {
-                        ca.Add(ad.AttributeIndex);
-                    }
+                {                    
+                    ca.Add(ad.AttributeIndex + 1);                    
                 }                
             }
 
@@ -235,33 +227,35 @@ namespace MUIT2013.Data.Repository
             var i = 0;
             foreach (var row in data)
             {
-                var obj = new double?[attributeCount];
+                var obj = new double?[attributeCount + 1];
                 var rowDict = (IDictionary<string, object>)row;
+                obj[idIndex] = (long)rowDict["Id"];
                 foreach (var ad in attributeDefinitions)
                 {
-                    obj[ad.AttributeIndex] = (double?)rowDict[ad.Name];
-                    if (!attributeDomainDict.ContainsKey(ad.AttributeIndex))
+                    var attributeIndex = ad.AttributeIndex + 1; // id
+                    obj[attributeIndex] = (double?)rowDict[ad.Name];
+                    if (!attributeDomainDict.ContainsKey(attributeIndex))
                     {
                         if (ad.IsIdentifier)
                         {
-                            attributeDomainDict[ad.AttributeIndex] = null;
+                            attributeDomainDict[attributeIndex] = null;
                         }
                         else
                         {
-                            attributeDomainDict[ad.AttributeIndex] = new List<double>();
+                            attributeDomainDict[attributeIndex] = new List<double>();
                         }
                     }
-                    if (attributeDomainDict[ad.AttributeIndex] != null)
+                    if (attributeDomainDict[attributeIndex] != null)
                     {
-                        attributeDomainDict[ad.AttributeIndex].Add((double)rowDict[ad.Name]);
+                        attributeDomainDict[attributeIndex].Add((double)rowDict[ad.Name]);
                     }
                 }
                 universe[i] = obj;
                 i++;
             }
 
-            attributeDomain = new double[attributeCount][];
-            for (int j = 0; j < attributeCount; j++)
+            attributeDomain = new double[attributeCount+1][];
+            for (int j = 1; j <= attributeCount; j++)
             {
                 attributeDomain[j] = attributeDomainDict[j] == null ? null : attributeDomainDict[j].Distinct().ToArray();
             }

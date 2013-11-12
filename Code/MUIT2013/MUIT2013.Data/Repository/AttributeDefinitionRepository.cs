@@ -79,7 +79,7 @@ namespace MUIT2013.Data.Repository
                 SET IsIdentifier = @IsIdentifier,
                 IsAutoEncoding = @IsAutoEncoding,
                 IsDecision = @IsDecision,
-                ColumnType = @ColumnType,
+                AttributeDataType = @AttributeDataType,
                 Description = @Description,
                 ValidationStatus = @ValidationStatus
                 WHERE Id = @Id;
@@ -116,6 +116,23 @@ namespace MUIT2013.Data.Repository
                 transaction.Commit();
                 con.Close();
             }
+        }
+
+        public static Dictionary<string, string> GetAttributeNameDictionary(IEnumerable<AttributeDefinition> attributeDefs)
+        {
+            var attributeDefDict = new Dictionary<string, string>();
+            attributeDefDict = attributeDefs.Aggregate(attributeDefDict, (d, ad) =>
+            {
+                d.Add(ad.Name, ad.RawName);
+                return d;
+            });
+            return attributeDefDict;
+        }
+
+        public static string[] GetAttributeNameDictionary(IEnumerable<AttributeDefinition> attributeDefs, int[] attributeIndices) 
+        { 
+            var dict = GetAttributeNameDictionary(attributeDefs);
+            return attributeIndices.Select(i => dict[string.Format("Column_{0}", i)]).ToArray();
         }
     }
 }

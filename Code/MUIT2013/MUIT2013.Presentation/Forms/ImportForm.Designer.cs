@@ -242,7 +242,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "ImportForm";
+            this.Text = "Import";
             this.Load += new System.EventHandler(this.ImportForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvDataFile)).EndInit();
             this.cmsDataFile.ResumeLayout(false);

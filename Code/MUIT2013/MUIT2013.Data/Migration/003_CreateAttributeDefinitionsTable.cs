@@ -15,7 +15,7 @@ namespace MUIT2013.Data.Migration
                 .WithColumn("Id").AsInt64().PrimaryKey()
                 .WithColumn("RawName").AsString().NotNullable()
                 .WithColumn("Name").AsString().NotNullable()
-                .WithColumn("ColumnType").AsFixedLengthString(32).NotNullable().WithDefaultValue("String")
+                .WithColumn("AttributeDataType").AsFixedLengthString(32).NotNullable().WithDefaultValue("String")
                 .WithColumn("ValidationStatus").AsFixedLengthString(32).NotNullable().WithDefaultValue("Not Ready")
                 .WithColumn("Description").AsString().Nullable()
                 .WithColumn("IsAutoEncoding").AsBoolean().WithDefaultValue(true)

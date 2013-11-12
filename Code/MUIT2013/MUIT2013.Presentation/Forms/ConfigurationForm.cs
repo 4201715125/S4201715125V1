@@ -20,17 +20,21 @@ namespace MUIT2013.Presentation.Forms
     {
         public List<AttributeDefinition> AttributeDefinitionCollection;
         private AttributeDefinitionViewFactory cdvFactory;
+        private Project currentProject;
         public ConfigurationForm()
         {
             InitializeComponent();
             dgvAttributeDefinition.AutoGenerateColumns = false;
             ActivateDataFile = dataFileService.GetActivedDataFile();
             cdvFactory = new AttributeDefinitionViewFactory();
+            currentProject = projectService.GetCurrentProject();
         }
 
         #region Events
         private void ConfigurationForm_Load(object sender, EventArgs e)
         {
+            txtProjectName.Text = currentProject.Name;
+            txtProjectDescription.Text = currentProject.Description;
             if (ActivateDataFile == null)
             {
                 tabControl.TabPages.Remove(tpProjectConfig);
@@ -45,7 +49,7 @@ namespace MUIT2013.Presentation.Forms
         {
             if (dgvAttributeDefinition.SelectedRows.Count == 0) return;
             AttributeDefinition selectedAttributeDefinition = (AttributeDefinition)dgvAttributeDefinition.SelectedRows[0].DataBoundItem;
-            cbColumnType.SelectedItem = selectedAttributeDefinition.ColumnType;
+            cbColumnType.SelectedItem = selectedAttributeDefinition.AttributeDataType;
             LoadColumnProperties();
         }
 
@@ -57,6 +61,7 @@ namespace MUIT2013.Presentation.Forms
         private void btnSave_Click(object sender, EventArgs e)
         {
             Save();
+            MessageBox.Show("Save configuration successfully", "Configuration");
         }
         #endregion
 
@@ -75,7 +80,7 @@ namespace MUIT2013.Presentation.Forms
             var columnType = cbColumnType.SelectedItem as string;
             if (string.IsNullOrEmpty(columnType)) return;
             AttributeDefinition selectedAttributeDefinition = (AttributeDefinition)dgvAttributeDefinition.SelectedRows[0].DataBoundItem;
-            selectedAttributeDefinition.ColumnType = columnType;
+            selectedAttributeDefinition.AttributeDataType = columnType;
             pgAttributeDefinition.SelectedObject = cdvFactory.Create(selectedAttributeDefinition);            
         }
 
@@ -151,7 +156,8 @@ namespace MUIT2013.Presentation.Forms
             }
             Save();
             dataService.CreateMapTable(ActivateDataFile, this.AttributeDefinitionCollection);
-            this.dgvAttributeDefinition.Refresh();  
+            this.dgvAttributeDefinition.Refresh();
+            MessageBox.Show("Create Map Table successfully", "Configuration");
         }
 
         private void dgvAttributeDefinition_CellContentClick(object sender, DataGridViewCellEventArgs e)
